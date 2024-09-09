@@ -1,0 +1,103 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #101820FF;
+    color: #F2AA4CFF;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+}
+
+header .logo h1 {
+    color: #F2AA4CFF;
+}
+
+header nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+#home {
+    background: url('images/hero-image.jpg') no-repeat center center/cover;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+.cta-button {
+    background-color: #F2AA4CFF;
+    color: #101820FF;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#products {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    background-color: #333;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.product-item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+#cart {
+    padding: 50px 20px;
+    background-color: #272727;
+    color: white;
+    text-align: center;
+}
+
+.checkout-button {
+    background-color: #F2AA4CFF;
+    color: #101820FF;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
