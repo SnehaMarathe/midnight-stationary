@@ -71,22 +71,11 @@ header nav ul li a {
     color: white;
     border-radius: 10px;
     width: 250px;
-    text-align: center;
 }
 
 .product-item img {
     width: 100%;
     border-radius: 5px;
-}
-
-#about, #contact {
-    padding: 50px 20px;
-    text-align: center;
-}
-
-#contact {
-    background-color: #272727;
-    color: white;
 }
 
 #cart {
