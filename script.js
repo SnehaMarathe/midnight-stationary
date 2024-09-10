@@ -1,4 +1,4 @@
-// Global variables
+// Global variables declare
 let products = [];
 let cart = [];
 let cartTotal = 0;
