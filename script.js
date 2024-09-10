@@ -70,12 +70,13 @@ function generateQRCode() {
     const qrCodeImg = document.getElementById('qr-code');
     qrCodeImg.src = qrCodeURL;
     qrCodeImg.style.display = 'block';
+    
 }
 
 // Function to get the user location and generate a WhatsApp share link
-function shareLocation() {
+function getLocation() {
     const locationInfo = document.getElementById('location-info');
-
+    
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
@@ -86,6 +87,9 @@ function shareLocation() {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         const locationMessage = `Hey! I am here: https://www.google.com/maps?q=${lat},${lng}`;
+
+        // Display the location information
+        locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
 
         // Get cart items as a list
         const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
@@ -98,12 +102,12 @@ function shareLocation() {
 
         // Specify the recipient phone number (including country code)
         const phoneNumber = '919146028969'; 
-
+        
         // Create WhatsApp share link with pre-filled message and phone number
         const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-        // Directly open WhatsApp with the pre-filled message
-        window.location.href = whatsappURL;
+        
+        // Provide the user with a link to share on WhatsApp
+        locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
     }
 
     function showError(error) {
