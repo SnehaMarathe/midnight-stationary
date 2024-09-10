@@ -48,3 +48,29 @@ function updateCart() {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
 }
+
+let cartTotal = 0;
+const deliveryCharge = 500;
+
+// Function to add items to the cart
+function addToCart(price) {
+    cartTotal += price;
+    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = cartTotal + deliveryCharge;
+}
+
+// Function to generate a UPI QR code
+function generateQRCode() {
+    const totalWithFee = cartTotal + deliveryCharge;
+    const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
+    const name = "Midnight Stationary";
+    const transactionNote = "Stationery Order Payment";
+    
+    // UPI QR code generation URL
+    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=upi://pay?pa=${upiId}&pn=${name}&am=${totalWithFee}&tn=${transactionNote}`;
+
+    // Set the QR code image
+    const qrCodeImg = document.getElementById('qr-code');
+    qrCodeImg.src = qrCodeURL;
+    qrCodeImg.style.display = 'block';
+}
