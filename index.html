@@ -27,16 +27,26 @@
         <div id="craft-materials" class="tab-content product-list"></div>
     </div>
 
-    <div class="cart">
-        <h2>Cart</h2>
-        <div class="cart-items"></div>
-        <p id="cart-total">Total: ₹0</p>
-        <p id="total-with-fee">Total with Delivery: ₹0</p>
-        <img id="qr-code" style="display:none;" alt="QR Code">
-        <button onclick="generateQRCode()">Generate QR Code</button>
+        <h2>Your Cart</h2>
+        <div class="cart-items">
+            <p>No items in cart.</p>
+        </div>
+
+        <div id="cart-summary">
+            <h3 id="cart-total">Total: ₹0</h3>
+            <h3 id="total-with-fee">Total with Delivery: ₹500</h3>
+        </div>
+
+        <button onclick="generateQRCode()">Pay</button>
+
+        <div class="qr-container">
+            <h3>Scan the QR Code to Pay</h3>
+            <img id="qr-code" src="" alt="QR Code" style="display:none;">
+        </div>
+
+        <h2>Share Your Location</h2>
+        <button onclick="getLocation()">Share My Location</button>
         <div id="location-info"></div>
-        <button onclick="getLocation()">Share Location and Cart</button>
-    </div>
     
     <footer>
         <p>&copy; 2024 Midnight Stationery. All rights reserved.</p>
