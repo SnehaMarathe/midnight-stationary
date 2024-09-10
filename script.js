@@ -1,24 +1,33 @@
+// Declare products globally
+let products = [];
+
 // Fetch Products
 fetch('products.json')
     .then(response => response.json())
-    .then(products => {
-        const productList = document.getElementById('product-list');
-
-        products.forEach(product => {
-            const productItem = document.createElement('div');
-            productItem.classList.add('product-item');
-            
-            productItem.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>Price: ₹${product.price}</p>
-                <button onclick="addToCart(${product.id})">Add to Cart</button>
-            `;
-            
-            productList.appendChild(productItem);
-        });
+    .then(data => {
+        products = data;
+        displayProducts(products);
     })
     .catch(error => console.error('Error loading product data:', error));
+
+// Function to display products
+function displayProducts(products) {
+    const productList = document.getElementById('product-list');
+
+    products.forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+        
+        productItem.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>Price: ₹${product.price}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+        `;
+        
+        productList.appendChild(productItem);
+    });
+}
 
 // Cart Array
 let cart = [];
@@ -28,8 +37,12 @@ const deliveryCharge = 500;
 // Add to Cart Function
 function addToCart(productId) {
     const product = products.find(prod => prod.id === productId);
-    cart.push(product);
-    updateCart();
+    if (product) {
+        cart.push(product);
+        updateCart();
+    } else {
+        console.error('Product not found:', productId);
+    }
 }
 
 // Update Cart Display
@@ -62,7 +75,7 @@ function generateQRCode() {
     }
 
     const totalWithFee = cartTotal + deliveryCharge;
-    const upiId = "maratheratnakar-1@okaxis";  // Replace with your actual UPI ID
+    const upiId = "maratheratnakar-2@okaxis";  // Replace with your actual UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
     
