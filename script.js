@@ -10,7 +10,6 @@ let cart = [];
 
 // Display Products
 const productList = document.getElementById('product-list');
-
 products.forEach(product => {
     const productItem = document.createElement('div');
     productItem.classList.add('product-item');
@@ -36,18 +35,18 @@ function addToCart(productId) {
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
     cartItems.innerHTML = '';
-    
+
     cart.forEach(item => {
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
         cartItem.innerHTML = `<p>${item.name} - ₹${item.price}</p>`;
         cartItems.appendChild(cartItem);
     });
-    
+
     if (cart.length === 0) {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
-    
+
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
     document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
     document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 500}`;
