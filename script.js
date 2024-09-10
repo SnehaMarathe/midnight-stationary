@@ -56,7 +56,7 @@ function updateCart() {
 function generateQRCode() {
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
     const totalWithFee = cartTotal + 500;
-    const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
+    const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
 
