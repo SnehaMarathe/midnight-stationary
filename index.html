@@ -62,6 +62,45 @@
             margin-bottom: 20px;
         }
 
+        /* Tabs */
+        .tabs {
+            overflow: hidden;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-links {
+            display: flex;
+            cursor: pointer;
+            background-color: #00796b;
+            color: white;
+            padding: 10px;
+            border: 1px solid #00796b;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-links div {
+            padding: 10px 20px;
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tab-links div:hover {
+            background-color: #004d40;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 0 0 6px 6px;
+            background-color: #fff;
+        }
+
+        .active-tab {
+            display: block;
+        }
+
         /* Product List */
         .product-list {
             display: grid;
@@ -222,51 +261,62 @@
 
     <div class="container">
         <h2>Our Products</h2>
-        <div class="product-list" id="product-list">
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Pen">
-                <h3>Gel Pen</h3>
-                <button>Add to Cart</button>
+
+        <div class="tabs">
+            <div class="tab-links">
+                <div onclick="openTab(event, 'chart-paper')">Chart Paper</div>
+                <div onclick="openTab(event, 'glue')">Glues</div>
+                <div onclick="openTab(event, 'craft-materials')">Craft Materials</div>
             </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Notebook">
-                <h3>Notebook</h3>
-                <button>Add to Cart</button>
+        </div>
+
+        <div id="chart-paper" class="tab-content">
+            <div class="product-list">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Chart Paper A4">
+                    <h3>Chart Paper A4</h3>
+                    <button>Add to Cart</button>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Chart Paper A3">
+                    <h3>Chart Paper A3</h3>
+                    <button>Add to Cart</button>
+                </div>
             </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Pencil">
-                <h3>HB Pencil</h3>
-                <button>Add to Cart</button>
+        </div>
+
+        <div id="glue" class="tab-content">
+            <div class="product-list">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Glue Stick">
+                    <h3>Glue Stick</h3>
+                    <button>Add to Cart</button>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Glue Bottle">
+                    <h3>Glue Bottle</h3>
+                    <button>Add to Cart</button>
+                </div>
             </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Eraser">
-                <h3>Eraser</h3>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Sharpener">
-                <h3>Sharpener</h3>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Ruler">
-                <h3>Ruler</h3>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Highlighter">
-                <h3>Highlighter</h3>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Stapler">
-                <h3>Stapler</h3>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="https://via.placeholder.com/150" alt="Glue Stick">
-                <h3>Glue Stick</h3>
-                <button>Add to Cart</button>
+        </div>
+
+        <div id="craft-materials" class="tab-content">
+            <div class="product-list">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Craft Paper">
+                    <h3>Craft Paper</h3>
+                    <button>Add to Cart</button>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Scissors">
+                    <h3>Scissors</h3>
+                    <button>Add to Cart</button>
+                </div>
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/150" alt="Tape">
+                    <h3>Tape</h3>
+                    <button>Add to Cart</button>
+                </div>
             </div>
         </div>
 
@@ -296,7 +346,26 @@
         <p>&copy; 2024 Midnight Stationery. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-links")[0].children;
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "#00796b";
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.style.backgroundColor = "#004d40";
+        }
+
+        // Set default tab
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".tab-links div").click();
+        });
+    </script>
 </body>
 
 </html>
