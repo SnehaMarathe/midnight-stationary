@@ -6,6 +6,32 @@
     <title>Product Tabs</title>
     <style>
         /* Your existing CSS rules */
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #00796b;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        header p {
+            font-size: 1em;
+            margin-top: 5px;
+            font-weight: 300;
+            color: #e0f2f1;
+        }
+        
         .product-list {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -53,6 +79,22 @@
         }
         .tab-content {
             display: none;
+        }
+        /* Footer */
+        footer {
+            background-color: #00796b;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 1em;
+            position: relative;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #e0f2f1;
         }
     </style>
 </head>
