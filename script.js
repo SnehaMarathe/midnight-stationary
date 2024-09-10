@@ -69,16 +69,13 @@ function generateQRCode() {
     
     // Construct the UPI link
     const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
+    const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
 
-    // Generate the Google Chart QR Code URL
-    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(upiLink)}`;
+    // Log the QR code URL for debugging
+    console.log('Generated QR Code URL:', qrCodeURL);
 
     // Set the QR code image source and make it visible
     const qrCodeImg = document.getElementById('qr-code');
     qrCodeImg.src = qrCodeURL;
     qrCodeImg.style.display = 'block';
-    
-    // Log the URL for debugging purposes
-    console.log('Generated QR Code URL: ', qrCodeURL);
 }
-
