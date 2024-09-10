@@ -63,15 +63,22 @@ function generateQRCode() {
     }
 
     const totalWithFee = cartTotal + deliveryCharge;
-    const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
+    const upiId = "maratheratnakar-2@okaxis";  // Replace with your actual UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
     
-    // UPI QR code generation URL
-    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=upi://pay?pa=${upiId}&pn=${name}&am=${totalWithFee}&tn=${transactionNote}`;
+    // Construct the UPI link
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
 
-    // Set the QR code image
+    // Generate the Google Chart QR Code URL
+    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(upiLink)}`;
+
+    // Set the QR code image source and make it visible
     const qrCodeImg = document.getElementById('qr-code');
     qrCodeImg.src = qrCodeURL;
     qrCodeImg.style.display = 'block';
+    
+    // Log the URL for debugging purposes
+    console.log('Generated QR Code URL: ', qrCodeURL);
 }
+
