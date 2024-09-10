@@ -10,13 +10,13 @@
             "id": 2,
             "name": "White Chart Paper",
             "price": 10,
-            "image": "images/white-chart-paper.jpg"
+            "image": "images/chart-paper.jpg"
         },
         {
             "id": 3,
             "name": "Yellow Chart Paper",
             "price": 50,
-            "image": "images/yellow-chart-paper.jpg"
+            "image": "images/chart-paper.jpg"
         }
     ],
     "glues": [
@@ -30,7 +30,7 @@
             "id": 2,
             "name": "Glue Bottle",
             "price": 25,
-            "image": "images/glue-bottle.jpg"
+            "image": "images/chart-paper.jpg"
         }
     ],
     "craftMaterials": [
@@ -38,19 +38,19 @@
             "id": 1,
             "name": "Craft Paper",
             "price": 30,
-            "image": "images/craft-paper.jpg"
+            "image": "images/chart-paper.jpg"
         },
         {
             "id": 2,
             "name": "Scissors",
             "price": 40,
-            "image": "images/scissors.jpg"
+            "image": "images/chart-paper.jpg"
         },
         {
             "id": 3,
             "name": "Tape",
             "price": 10,
-            "image": "images/tape.jpg"
+            "image": "images/chart-paper.jpg"
         }
     ]
 }
