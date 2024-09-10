@@ -1,34 +1,62 @@
-// Product Data (This would normally come from the backend)
-const products = [
-    { id: 1, name: 'Chart Paper', price: 20, image: 'images/chart-paper.jpg' },
-    { id: 2, name: 'Glue Stick', price: 10, image: 'images/glue-stick.jpg' },
-    { id: 3, name: 'Colored Markers', price: 50, image: 'images/markers.jpg' }
-];
-
 // Cart Array
 let cart = [];
 
-// Display Products
-const productList = document.getElementById('product-list');
-products.forEach(product => {
-    const productItem = document.createElement('div');
-    productItem.classList.add('product-item');
-    
-    productItem.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>Price: ₹${product.price}</p>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-    `;
-    
-    productList.appendChild(productItem);
+// Fetch Product Data and Display Products
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            // Populate Chart Paper Tab
+            const chartPaperContainer = document.getElementById('chart-paper');
+            chartPaperContainer.innerHTML = data.chartPaper.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Populate Glues Tab
+            const gluesContainer = document.getElementById('glue');
+            gluesContainer.innerHTML = data.glues.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Populate Craft Materials Tab
+            const craftMaterialsContainer = document.getElementById('craft-materials');
+            craftMaterialsContainer.innerHTML = data.craftMaterials.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Open the first tab by default
+            document.querySelector(".tab-links div").click();
+        })
+        .catch(error => console.error('Error loading the product data:', error));
 });
 
 // Add to Cart Function
 function addToCart(productId) {
-    const product = products.find(prod => prod.id === productId);
-    cart.push(product);
-    updateCart();
+    // Assuming products are globally available or fetched again
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
+            const product = allProducts.find(prod => prod.id === productId);
+            cart.push(product);
+            updateCart();
+        })
+        .catch(error => console.error('Error fetching product data:', error));
 }
 
 // Update Cart Display
@@ -70,7 +98,6 @@ function generateQRCode() {
     const qrCodeImg = document.getElementById('qr-code');
     qrCodeImg.src = qrCodeURL;
     qrCodeImg.style.display = 'block';
-    
 }
 
 // Function to get the user location and generate a WhatsApp share link
@@ -126,4 +153,19 @@ function getLocation() {
                 break;
         }
     }
+}
+
+// Function to handle tab switching
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-links")[0].children;
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "#00796b";
+    }
+    document.getElementById(tabName).style.display = "grid";
+    evt.currentTarget.style.backgroundColor = "#004d40";
 }
