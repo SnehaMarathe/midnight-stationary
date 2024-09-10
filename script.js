@@ -63,8 +63,8 @@ function generateQRCode() {
     }
 
     const totalWithFee = cartTotal + deliveryCharge;
-    const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
-    const name = "Marathe Ratnakar";
+    const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
+    const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
     
     // UPI QR code generation URL
