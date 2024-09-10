@@ -31,6 +31,34 @@
             color: #e0f2f1;
         }
 
+        /* Tabs */
+        .tabs {
+            margin-bottom: 20px;
+        }
+
+        .tab-links {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .tab-links div {
+            flex: 1;
+            background-color: #00796b;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px 6px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab-links div:hover {
+            background-color: #004d40;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
         /* Main Container */
         .container {
             max-width: 1200px;
@@ -61,45 +89,6 @@
             margin-bottom: 20px;
         }
 
-        /* Tabs */
-        .tabs {
-            overflow: hidden;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .tab-links {
-            display: flex;
-            cursor: pointer;
-            background-color: #00796b;
-            color: white;
-            padding: 10px;
-            border: 1px solid #00796b;
-            border-radius: 6px 6px 0 0;
-        }
-
-        .tab-links div {
-            padding: 10px 20px;
-            flex: 1;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .tab-links div:hover {
-            background-color: #004d40;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 0 0 6px 6px;
-            background-color: #fff;
-        }
-
-        .active-tab {
-            display: block;
-        }
-
         /* Product List */
         .product-list {
             display: grid;
@@ -118,8 +107,10 @@
         }
 
         .product-item img {
-            width: 80%;
-            border-radius: 6px;
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: cover;
         }
 
         .product-item h3 {
