@@ -1,7 +1,10 @@
-// Declare products globally
+// Global variables
 let products = [];
+let cart = [];
+let cartTotal = 0;
+const deliveryCharge = 500;
 
-// Fetch Products
+// Fetch Products from a separate JSON file
 fetch('products.json')
     .then(response => response.json())
     .then(data => {
@@ -13,6 +16,7 @@ fetch('products.json')
 // Function to display products
 function displayProducts(products) {
     const productList = document.getElementById('product-list');
+    productList.innerHTML = ''; // Clear any existing content
 
     products.forEach(product => {
         const productItem = document.createElement('div');
@@ -28,11 +32,6 @@ function displayProducts(products) {
         productList.appendChild(productItem);
     });
 }
-
-// Cart Array
-let cart = [];
-let cartTotal = 0;
-const deliveryCharge = 500;
 
 // Add to Cart Function
 function addToCart(productId) {
