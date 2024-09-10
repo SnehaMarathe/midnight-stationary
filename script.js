@@ -60,9 +60,12 @@ function generateQRCode() {
     const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
-    
-    // UPI QR code generation URL
-    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
+
+    // Create the UPI payment link
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
+
+    // Generate QR code URL
+    const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(upiLink)}`;
 
     // Set the QR code image
     const qrCodeImg = document.getElementById('qr-code');
