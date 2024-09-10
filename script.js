@@ -91,8 +91,11 @@ function getLocation() {
         // Display the location information
         locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
         
-        // Create WhatsApp share link
-        const whatsappURL = `https://wa.me/?text=${encodeURIComponent(locationMessage)}`;
+        // Specify the recipient phone number (including country code)
+        const phoneNumber = '919146028969'; 
+        
+        // Create WhatsApp share link with pre-filled message and phone number
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(locationMessage)}`;
         
         // Provide the user with a link to share on WhatsApp
         locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location via WhatsApp</a>`;
