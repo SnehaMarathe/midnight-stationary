@@ -45,11 +45,13 @@
 
         h2 {
             font-size: 2em;
+            margin: 30px auto;
             margin-bottom: 10px;
         }
 
         h3 {
             font-size: 1.2em;
+            margin: 30px auto;
             color: #00796b;
             margin-bottom: 20px;
         }
