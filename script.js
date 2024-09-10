@@ -66,10 +66,17 @@ function generateQRCode() {
     // Generate QR code URL
     const qrCodeURL = `https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=${encodeURIComponent(upiLink)}`;
 
-    // Set the QR code image
-    const qrCodeImg = document.getElementById('qr-code');
-    qrCodeImg.src = qrCodeURL;
-    qrCodeImg.style.display = 'block';
+    // Get the QR code container
+    const qrCodeContainer = document.getElementById('qr-code');
+    qrCodeContainer.innerHTML = ''; // Clear previous QR code
+
+    // Generate QR code
+    new QRCode(qrCodeContainer, {
+        text: upiLink,
+        width: 250,
+        height: 250
+    });
+    
 }
 
 // Function to get the user location and generate a WhatsApp share link
