@@ -4,29 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Stationary</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .product-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: calc(33% - 20px);
+        }
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .product-item h3 {
+            margin: 10px 0;
+        }
+        .product-item button {
+            background: #28a745;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .product-item button:hover {
+            background: #218838;
+        }
+        .cart-items {
+            margin: 20px 0;
+        }
+        .cart-item {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        #cart-total, #total-with-fee {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .qr-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #qr-code {
+            display: none;
+            margin: 20px auto;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @media (max-width: 768px) {
+            .product-item {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 480px) {
+            .product-item {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Midnight Stationary</h1>
+        <p>Your last-minute stationery solution in Pune</p>
     </header>
 
-    <main>
-        <section id="product-list" class="product-list">
-            <!-- Products will be loaded here -->
-        </section>
+    <div class="container">
+        <h2>Our Products</h2>
+        <div class="product-list" id="product-list">
+            <!-- Product items will be dynamically inserted here -->
+        </div>
 
-        <section class="cart">
-            <h2>Your Cart</h2>
-            <div class="cart-items">
-                <!-- Cart items will be displayed here -->
-            </div>
-            <p id="cart-total">Total: ₹0</p>
-            <p id="total-with-fee">Total with Delivery: ₹500</p>
-            <button onclick="generateQRCode()">Pay Now</button>
-            <img id="qr-code" style="display: none;" alt="UPI QR Code">
-        </section>
-    </main>
+        <h2>Your Cart</h2>
+        <div class="cart-items">
+            <p>No items in cart.</p>
+        </div>
+
+        <div id="cart-summary">
+            <h3 id="cart-total">Total: ₹0</h3>
+            <h3 id="total-with-fee">Total with Delivery: ₹500</h3>
+        </div>
+
+        <button onclick="generateQRCode()">Pay</button>
+
+        <div class="qr-container">
+            <h3>Scan the QR Code to Pay</h3>
+            <img id="qr-code" src="" alt="QR Code">
+        </div>
+
+        <h2>Share Your Location</h2>
+        <button onclick="getLocation()">Share My Location</button>
+        <div id="location-info"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Midnight Stationary. All rights reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
