@@ -1,45 +1,42 @@
-// Product Data (This would normally come from the backend)
-const products = [
-    { id: 1, name: 'Chart Paper', price: 20, image: 'images/chart-paper.jpg' },
-    { id: 2, name: 'Glue Stick', price: 10, image: 'images/glue-stick.jpg' },
-    { id: 3, name: 'Colored Markers', price: 50, image: 'images/markers.jpg' }
-];
+// Fetch Products
+fetch('products.json')
+    .then(response => response.json())
+    .then(products => {
+        const productList = document.getElementById('product-list');
 
-// Cart Array to hold added products
+        products.forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+            
+            productItem.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>Price: ₹${product.price}</p>
+                <button onclick="addToCart(${product.id})">Add to Cart</button>
+            `;
+            
+            productList.appendChild(productItem);
+        });
+    })
+    .catch(error => console.error('Error loading product data:', error));
+
+// Cart Array
 let cart = [];
 let cartTotal = 0;
-const deliveryCharge = 500; // Fixed delivery charge
-
-// Display Products
-const productList = document.querySelector('.product-list');
-
-products.forEach(product => {
-    const productItem = document.createElement('div');
-    productItem.classList.add('product-item');
-    
-    productItem.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>Price: ₹${product.price}</p>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-    `;
-    
-    productList.appendChild(productItem);
-});
+const deliveryCharge = 500;
 
 // Add to Cart Function
 function addToCart(productId) {
     const product = products.find(prod => prod.id === productId);
     cart.push(product);
-    cartTotal += product.price;
     updateCart();
 }
 
 // Update Cart Display
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
-    cartItems.innerHTML = ''; // Clear existing items
-    
+    cartItems.innerHTML = '';
+
     cart.forEach(item => {
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
@@ -47,12 +44,14 @@ function updateCart() {
         cartItems.appendChild(cartItem);
     });
 
-    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = cartTotal + deliveryCharge;
-    
     if (cart.length === 0) {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
+
+    // Update Cart Total
+    cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + deliveryCharge}`;
 }
 
 // Function to generate a UPI QR code
@@ -70,9 +69,6 @@ function generateQRCode() {
     // Construct the UPI link
     const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
     const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
-
-    // Log the QR code URL for debugging
-    console.log('Generated QR Code URL:', qrCodeURL);
 
     // Set the QR code image source and make it visible
     const qrCodeImg = document.getElementById('qr-code');
