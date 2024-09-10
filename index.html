@@ -37,59 +37,51 @@
                 <img src="images/chart-paper.jpg" alt="Chart Paper">
                 <h3>Chart Paper</h3>
                 <p>Price: ₹20</p>
-                <button onclick="addToCart(1)">Add to Cart</button>
+                <button onclick="addToCart(20)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="images/glue-stick.jpg" alt="Glue Stick">
                 <h3>Glue Stick</h3>
                 <p>Price: ₹10</p>
-                <button onclick="addToCart(2)">Add to Cart</button>
+                <button onclick="addToCart(10)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="images/markers.jpg" alt="Colored Markers">
                 <h3>Colored Markers</h3>
                 <p>Price: ₹50</p>
-                <button onclick="addToCart(3)">Add to Cart</button>
+                <button onclick="addToCart(50)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="images/drawing-pads.jpg" alt="Drawing Pads">
                 <h3>Drawing Pads</h3>
                 <p>Price: ₹150</p>
-                <button onclick="addToCart(4)">Add to Cart</button>
+                <button onclick="addToCart(150)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="images/post-it-notes.jpg" alt="Post-It Notes">
                 <h3>Post-It Notes</h3>
                 <p>Price: ₹60</p>
-                <button onclick="addToCart(5)">Add to Cart</button>
+                <button onclick="addToCart(60)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="images/paint-supplies.jpg" alt="Paint Supplies">
                 <h3>Paint Supplies</h3>
                 <p>Price: ₹200</p>
-                <button onclick="addToCart(6)">Add to Cart</button>
+                <button onclick="addToCart(200)">Add to Cart</button>
             </div>
         </div>
-    </section>
-
-    <section id="about">
-        <h2>About Us</h2>
-        <p>At Midnight Stationary, we specialize in delivering last-minute stationery supplies to customers across Pune. Our mission is to provide quick and reliable service to meet your urgent needs, anytime during the day or night.</p>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>For any inquiries or assistance, please reach out to us:</p>
-        <p>Email: contact@midnightstationary.in</p>
-        <p>Phone: +91-XXXXXXXXXX</p>
     </section>
 
     <section id="cart">
         <h2>Your Cart</h2>
         <div class="cart-items">
-            <p>No items in cart.</p>
+            <p id="cart-total">Total: ₹0</p>
         </div>
-        <button class="checkout-button">Checkout</button>
+        <button class="checkout-button" onclick="generateQRCode()">Pay ₹<span id="total-with-fee">500</span></button>
+        <div id="qr-code-section">
+            <h3>Scan to Pay:</h3>
+            <img id="qr-code" src="" alt="UPI QR Code" style="display:none;">
+        </div>
     </section>
 
     <footer>
