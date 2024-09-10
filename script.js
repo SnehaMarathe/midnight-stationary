@@ -62,7 +62,7 @@ function generateQRCode() {
     }
 
     const totalWithFee = cartTotal + deliveryCharge;
-    const upiId = "maratheratnakar-2@okaxis";  // Replace with your actual UPI ID
+    const upiId = "maratheratnakar-1@okaxis";  // Replace with your actual UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
     
