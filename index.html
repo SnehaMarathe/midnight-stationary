@@ -4,94 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Stationary</title>
-    <link rel="stylesheet" href="styles.css">
-        #qr-code {
-            display: inline-block; /* Ensure the image is treated as an inline-block element */
-            margin-top: 20px; /* Add some space above the QR code */
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: calc(33% - 20px);
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .product-item h3 {
+            margin: 10px 0;
+        }
+
+        .product-item button {
+            background: #28a745;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .product-item button:hover {
+            background: #218838;
+        }
+
+        .cart-items {
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        #cart-total, #total-with-fee {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #qr-code {
+            display: inline-block;
+            margin: 20px auto;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .product-item {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-item {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <h1>Midnight Stationary</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#cart">Cart</a></li>
-            </ul>
-        </nav>
+        <h1>Midnight Stationary</h1>
+        <p>Your last-minute stationery solution in Pune</p>
     </header>
 
-    <section id="home">
-        <div class="hero">
-            <h1>Your Last-Minute Stationery Savior in Pune</h1>
-            <p>We deliver what you need, when you need it, even at midnight. Serving all areas of Pune!</p>
-            <a href="#products" class="cta-button">Shop Now</a>
+    <div class="container">
+        <h2>Our Products</h2>
+        <div class="product-list" id="product-list">
+            <!-- Product items will be dynamically inserted here -->
         </div>
-    </section>
 
-    <section id="products">
-        <h2>Our Unique Products</h2>
-        <div class="product-list">
-            <div class="product-item">
-                <img src="images/chart-paper.jpg" alt="Chart Paper">
-                <h3>Chart Paper</h3>
-                <p>Price: ₹20</p>
-                <button onclick="addToCart(20)">Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="images/glue-stick.jpg" alt="Glue Stick">
-                <h3>Glue Stick</h3>
-                <p>Price: ₹10</p>
-                <button onclick="addToCart(10)">Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="images/markers.jpg" alt="Colored Markers">
-                <h3>Colored Markers</h3>
-                <p>Price: ₹50</p>
-                <button onclick="addToCart(50)">Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="images/drawing-pads.jpg" alt="Drawing Pads">
-                <h3>Drawing Pads</h3>
-                <p>Price: ₹150</p>
-                <button onclick="addToCart(150)">Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="images/post-it-notes.jpg" alt="Post-It Notes">
-                <h3>Post-It Notes</h3>
-                <p>Price: ₹60</p>
-                <button onclick="addToCart(60)">Add to Cart</button>
-            </div>
-            <div class="product-item">
-                <img src="images/paint-supplies.jpg" alt="Paint Supplies">
-                <h3>Paint Supplies</h3>
-                <p>Price: ₹200</p>
-                <button onclick="addToCart(200)">Add to Cart</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="cart">
         <h2>Your Cart</h2>
         <div class="cart-items">
-            <p id="cart-total">Total: ₹0</p>
+            <p>No items in cart.</p>
         </div>
-        <button class="checkout-button" onclick="generateQRCode()">Pay ₹<span id="total-with-fee">500</span></button>
-        <div id="qr-code-section">
-            <h3>Scan to Pay:</h3>
-            <img id="qr-code" src="" alt="UPI QR Code" style="display:none;">
+
+        <div id="cart-summary">
+            <h3 id="cart-total">Total: ₹0</h3>
+            <h3 id="total-with-fee">Total with Delivery: ₹500</h3>
         </div>
-    </section>
+
+        <button onclick="generateQRCode()">Pay</button>
+
+        <div class="qr-container">
+            <h3>Scan the QR Code to Pay</h3>
+            <img id="qr-code" src="" alt="QR Code">
+        </div>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Midnight Stationary. Serving Pune with quick delivery of essential stationery.</p>
+        <p>&copy; 2024 Midnight Stationary. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
