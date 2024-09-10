@@ -5,8 +5,10 @@ const products = [
     { id: 3, name: 'Colored Markers', price: 50, image: 'images/markers.jpg' }
 ];
 
-// Cart Array
+// Cart Array to hold added products
 let cart = [];
+let cartTotal = 0;
+const deliveryCharge = 500; // Fixed delivery charge
 
 // Display Products
 const productList = document.querySelector('.product-list');
@@ -29,13 +31,14 @@ products.forEach(product => {
 function addToCart(productId) {
     const product = products.find(prod => prod.id === productId);
     cart.push(product);
+    cartTotal += product.price;
     updateCart();
 }
 
 // Update Cart Display
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
-    cartItems.innerHTML = '';
+    cartItems.innerHTML = ''; // Clear existing items
     
     cart.forEach(item => {
         const cartItem = document.createElement('div');
@@ -43,24 +46,22 @@ function updateCart() {
         cartItem.innerHTML = `<p>${item.name} - ₹${item.price}</p>`;
         cartItems.appendChild(cartItem);
     });
+
+    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = cartTotal + deliveryCharge;
     
     if (cart.length === 0) {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
 }
 
-let cartTotal = 0;
-const deliveryCharge = 500;
-
-// Function to add items to the cart
-function addToCart(price) {
-    cartTotal += price;
-    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = cartTotal + deliveryCharge;
-}
-
 // Function to generate a UPI QR code
 function generateQRCode() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+
     const totalWithFee = cartTotal + deliveryCharge;
     const upiId = "maratheratnakar-2@okaxis";  // Replace with your UPI ID
     const name = "Midnight Stationary";
