@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Chart Paper",
+        "price": 20,
+        "image": "images/chart-paper.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Glue Stick",
+        "price": 10,
+        "image": "images/glue-stick.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Colored Markers",
+        "price": 50,
+        "image": "images/markers.jpg"
+    }
+]
