@@ -3,13 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Stationary</title>
-<link rel="stylesheet" href="styles.css">
+    <title>Midnight Stationery</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+        header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.2em;
+            color: #e74c3c;
+        }
+        header .cta {
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        header .cta span {
+            color: #e74c3c;
+        }
+        .container {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Midnight Stationery</h1>
-        <p>Your last-minute stationery solution in Pune from 8pm to 8am</p>
+        <h1>MidNight Stationery? Not Anymore!</h1>
+        <p class="cta">Grab Your Stationery from 8 PM to 8 AM—Delivered Right to Your Door. <br>
+        No Login Required: Just Add Your Items, Scan the QR Code, Pay, and Send Your Location!</p>
     </header>
     
     <div class="container">
@@ -35,7 +63,7 @@
 
         <div id="cart-summary">
             <h3 id="cart-total">Total: ₹0</h3>
-            <h3 id="total-with-fee">Convinience Charge: ₹150</h3>
+            <h3 id="total-with-fee">Convenience Charge: ₹150</h3>
         </div>
 
         <button onclick="generateQRCode()">Pay</button>
@@ -56,6 +84,5 @@
     </footer>
     
     <script src="script.js"></script>
-
 </body>
 </html>
