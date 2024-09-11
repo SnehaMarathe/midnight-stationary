@@ -122,7 +122,7 @@ function generateQRCode() {
         return;
     }
 
-    const totalWithFee = cartTotal + 500;
+    const totalWithFee = cartTotal + 150;
     const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
     const name = "Midnight Stationary";
     const transactionNote = "Stationery Order Payment";
