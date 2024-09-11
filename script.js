@@ -1,6 +1,32 @@
 // Cart Array
 let cart = [];
 
+// Haversine Formula to calculate distance between two lat/long points in kilometers
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+}
+
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
+
+// Check if current location is within 10km of the specified lat/long
+function checkProximity(lat, lon) {
+    const targetLat = 18.489754;
+    const targetLon = 73.866688;
+    const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
+
+    return distance <= 10; // Check if distance is within 10km
+}
+
 // Fetch Product Data and Display Products
 document.addEventListener('DOMContentLoaded', function() {
     fetch('products.json')
@@ -113,28 +139,34 @@ function getLocation() {
     function showPosition(position) {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        const locationMessage = `Hey! I am here: https://www.google.com/maps?q=${lat},${lng}`;
 
-        // Display the location information
-        locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
+        // Check if within 10km
+        if (checkProximity(lat, lng)) {
+            const locationMessage = `Hey! I am here: https://www.google.com/maps?q=${lat},${lng}`;
 
-        // Get cart items as a list
-        const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+            // Display the location information
+            locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
 
-        // If the cart is empty
-        const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
+            // Get cart items as a list
+            const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
 
-        // Final message with location and cart details
-        const message = `${locationMessage}\n\n${cartMessage}`;
+            // If the cart is empty
+            const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
 
-        // Specify the recipient phone number (including country code)
-        const phoneNumber = '919146028969'; 
-        
-        // Create WhatsApp share link with pre-filled message and phone number
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        
-        // Provide the user with a link to share on WhatsApp
-        locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
+            // Final message with location and cart details
+            const message = `${locationMessage}\n\n${cartMessage}`;
+
+            // Specify the recipient phone number (including country code)
+            const phoneNumber = '919146028969'; 
+            
+            // Create WhatsApp share link with pre-filled message and phone number
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Provide the user with a link to share on WhatsApp
+            locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
+        } else {
+            locationInfo.textContent = "You are not within the delivery range (10 km from store).";
+        }
     }
 
     function showError(error) {
