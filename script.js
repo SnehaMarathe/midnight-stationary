@@ -107,7 +107,7 @@ function updateCart() {
 
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
     document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 500}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
 }
 
 // Function to generate a UPI QR code
