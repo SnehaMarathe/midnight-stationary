@@ -2,7 +2,7 @@ name: Update Visitor Counter
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Runs every 30 minutes
+    - cron: '*/3 * * * *'  # Runs every 30 minutes
 
 jobs:
   update-counter:
