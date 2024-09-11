@@ -1,0 +1,36 @@
+name: Update Visitor Counter
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
+
+jobs:
+  update-counter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Read counter value
+      id: read_counter
+      run: |
+        COUNTER=$(cat counter.txt || echo "0")  # Default to 0 if file is not found
+        echo "Current counter value: $COUNTER"
+        echo "COUNTER=$COUNTER" >> $GITHUB_ENV
+
+    - name: Increment counter
+      id: increment_counter
+      run: |
+        NEW_COUNTER=$((COUNTER + 1))
+        echo $NEW_COUNTER > counter.txt
+        echo "New counter value: $NEW_COUNTER"
+        echo "NEW_COUNTER=$NEW_COUNTER" >> $GITHUB_ENV
+
+    - name: Commit updated counter
+      run: |
+        git config --local user.name "github-actions"
+        git config --local user.email "github-actions@github.com"
+        git add counter.txt
+        git commit -m "Update visitor counter"
+        git push
