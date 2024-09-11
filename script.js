@@ -156,6 +156,7 @@ function getLocation() {
     }
 
     function showPosition(position) {
+        alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
@@ -188,6 +189,7 @@ function getLocation() {
             document.getElementById('share-location-btn').disabled = false;
         } else {
             // Notify the user that they are not within range
+            alert('You are not within the delivery range (10 km from store).');
             locationInfo.textContent = "You are not within the delivery range (10 km from store).";
         }
     }
