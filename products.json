@@ -2,22 +2,34 @@
     "chartPaper": [
         {
             "id": 1,
-            "name": "Red Chart Paper",
+            "name": "Green Chart Paper (A3)",
             "price": 20,
-            "image": "images/chart-paper.jpg"
+            "image": "images/green-chart-paper.jpg"
         },
         {
             "id": 2,
-            "name": "White Chart Paper",
+            "name": "White Chart Paper (A3)",
             "price": 10,
             "image": "images/white-chart-paper.jpg"
         },
         {
             "id": 3,
-            "name": "Yellow Chart Paper",
+            "name": "Yellow Chart Paper (A3)",
             "price": 50,
             "image": "images/yellow-chart-paper.jpg"
-        }
+        },
+        {
+            "id": 4,
+            "name": "Black Chart Paper (A3)",
+            "price": 80,
+            "image": "images/black-chart-paper.jpg"
+        },        
+        {
+            "id": 5,
+            "name": "Brown Card Sheet (A3)",
+            "price": 80,
+            "image": "images/brown-chart-paper.jpg"
+        },         
     ],
     "glues": [
         {
