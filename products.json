@@ -2,19 +2,19 @@
     "chartPaper": [
         {
             "id": 1,
-            "name": "Green Chart Paper (A3)",
+            "name": "Green Chart Paper",
             "price": 20,
             "image": "images/green-chart-paper.jpg"
         },
         {
             "id": 2,
-            "name": "White Chart Paper (A3)",
+            "name": "White Chart Paper",
             "price": 10,
             "image": "images/white-chart-paper.jpg"
         },
         {
             "id": 3,
-            "name": "Yellow Chart Paper (A3)",
+            "name": "Yellow Chart Paper",
             "price": 50,
             "image": "images/yellow-chart-paper.jpg"
         }       
