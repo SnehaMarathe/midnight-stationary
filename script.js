@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add to Cart Function
 function addToCart(productId) {
-    // Assuming products are globally available or fetched again
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
@@ -248,7 +247,6 @@ async function fetchVisitorCounter() {
 
 // Call the function to update the visitor counter
 fetchVisitorCounter();
-
 
 // Function to generate a UPI deep link
 function generateUPILink() {
