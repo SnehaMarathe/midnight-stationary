@@ -17,7 +17,19 @@
             "name": "Yellow Chart Paper",
             "price": 50,
             "image": "images/yellow-chart-paper.jpg"
-        }       
+        },
+        {
+            "id": 4,
+            "name": "Black Chart Paper",
+            "price": 50,
+            "image": "images/black-chart-paper.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Brown Chart Paper",
+            "price": 50,
+            "image": "images/brown-chart-paper.jpg"
+        }        
     ],
     "glues": [
         {
