@@ -155,14 +155,14 @@ function getLocation() {
         locationInfo.textContent = "Geolocation is not supported by this browser.";
     }
 
-    function showPosition(position) {
-        alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
+    function showPosition(position) { 
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
         // Check if within 10km
         if (checkProximity(lat, lng)) {
-            const locationMessage = `Hey! I am here: https://www.google.com/maps?q=${lat},${lng}`;
+            alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
+            const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${lat},${lng}`;
 
             // Display the location information
             locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
