@@ -17,19 +17,7 @@
             "name": "Yellow Chart Paper (A3)",
             "price": 50,
             "image": "images/yellow-chart-paper.jpg"
-        },
-        {
-            "id": 4,
-            "name": "Black Chart Paper (A3)",
-            "price": 80,
-            "image": "images/black-chart-paper.jpg"
-        },        
-        {
-            "id": 5,
-            "name": "Brown Card Sheet (A4)",
-            "price": 80,
-            "image": "images/brown-chart-paper.jpg"
-        }        
+        }       
     ],
     "glues": [
         {
