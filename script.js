@@ -1,264 +1,242 @@
-/* Global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #e0f7fa, #b2dfdb);
-    color: #333;
-    line-height: 1.5;
+// Cart Array
+let cart = [];
+// Haversine Formula to calculate distance between two lat/long points in kilometers
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon1 - lon2);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
 }
-
-/* Header */
-header {
-    background: linear-gradient(135deg, #004d40, #00796b);
-    color: #fff;
-    padding: 1em 0;
-    text-align: center;
-    font-size: 1.4em;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    border-bottom: 3px solid #004d40;
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
 }
-
-header h1 {
-    font-size: 1.8em;
-    margin: 0;
+// Check if current location is within 10km of the specified lat/long
+function checkProximity(lat, lon) {
+    const targetLat = 18.489754;
+    const targetLon = 73.866688;
+    const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
+    return distance <= 10; // Check if distance is within 10km
 }
+// Disable the "Share My Location" button by default
+document.addEventListener('DOMContentLoaded', function() {
+    // Disable the "Share My Location" button by default
+    document.getElementById('share-location-btn').disabled = true;
+    // Fetch Product Data and Display Products
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            // Populate Chart Paper Tab
+            const chartPaperContainer = document.getElementById('chart-paper');
+            chartPaperContainer.innerHTML = data.chartPaper.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+            // Populate Glues Tab
+            const gluesContainer = document.getElementById('glue');
+            gluesContainer.innerHTML = data.glues.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+            // Populate Craft Materials Tab
+            const craftMaterialsContainer = document.getElementById('craft-materials');
+            craftMaterialsContainer.innerHTML = data.craftMaterials.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+            // Open the first tab by default
+            document.querySelector(".tab-links div").click();
+            // Check location and update UI accordingly
+            getLocation();
+        })
+        .catch(error => console.error('Error loading the product data:', error));
+});
 
-header p {
-    font-size: 1em;
-    margin-top: 5px;
-    font-weight: 300;
-    color: #e0f2f1;
+// Add to Cart Function
+function addToCart(productId) {
+    // Assuming products are globally available or fetched again
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
+            const product = allProducts.find(prod => prod.id === productId);
+            cart.push(product);
+            updateCart();
+        })
+        .catch(error => console.error('Error fetching product data:', error));
 }
-
-/* Main Container */
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+// Update Cart Display
+function updateCart() {
+    const cartItems = document.querySelector('.cart-items');
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `<p>${item.name} - ₹${item.price}</p>`;
+        cartItems.appendChild(cartItem);
+    });
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p>No items in cart.</p>';
+    }
+    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
 }
-
-/* Headings */
-h1, h2, h3 {
-    color: #004d40;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+// Function to generate a UPI QR code
+function generateQRCode() {
+    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    // Check if cart is empty, do not generate QR code if empty
+    if (cart.length === 0) {
+        alert('Cart is empty. Add items to the cart to generate a QR code.');
+        document.getElementById('qr-code').style.display = 'none';
+        document.getElementById('share-location-btn').disabled = true;  // Disable Share Location button
+        return;
+    }
+    const totalWithFee = cartTotal + 150;
+    const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
+    const name = "Midnight Stationary";
+    const transactionNote = "Stationery Order Payment";
+    // Create the UPI payment link
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
+    // Generate QR code URL
+    const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
+    
+    // Set the QR code image
+    const qrCodeImg = document.getElementById('qr-code');
+    qrCodeImg.src = qrCodeURL;
+    qrCodeImg.style.display = 'block';
+    // Call the UPI link generator
+    generateUPILink();
+    // Enable the Share Location button after QR code is generated
+    document.getElementById('share-location-btn').disabled = false;
 }
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-h2 {
-    font-size: 1.6em;
-    margin: 20px 0;
-}
-
-h3 {
-    font-size: 1.3em;
-    margin: 15px 0;
-    color: #00796b;
-}
-
-/* Tabs */
-.tabs {
-    overflow: hidden;
-    border-bottom: 2px solid #00796b;
-    margin-bottom: 15px;
-}
-
-.tab-links {
-    display: flex;
-    cursor: pointer;
-    background: #00796b;
-    color: white;
-    padding: 8px;
-    border-radius: 6px 6px 0 0;
-    font-size: 1.1em;
-}
-
-.tab-links div {
-    padding: 8px 16px;
-    flex: 1;
-    text-align: center;
-    font-weight: bold;
-    transition: background 0.3s, color 0.3s;
-}
-
-.tab-links div:hover {
-    background: #004d40;
-    color: #e0f2f1;
-}
-
-.tab-content {
-    display: none;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 0 0 6px 6px;
-    background: #fff;
-}
-
-/* Active Tab */
-.active-tab {
-    display: block;
-}
-
-/* Product List */
-.product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.product-item {
-    background: #e0f2f1;
-    border: 1px solid #b2dfdb;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.product-item img {
-    width: 70%;
-    border-radius: 6px;
-}
-
-.product-item h3 {
-    margin: 10px 0;
-    font-size: 1.2em;
-    color: #004d40;
-}
-
-.product-item button {
-    background: #0288d1;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    font-size: 1em;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-.product-item button:hover {
-    background: #0277bd;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.product-item:hover {
-    transform: translateY(-5px);
-}
-
-/* Cart Section */
-.cart-items {
-    margin-bottom: 15px;
-}
-
-.cart-item {
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-#cart-total, #total-with-fee {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-}
-
-/* Buttons */
-button {
-    background: #0288d1;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.1em;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-button:hover {
-    background: #0277bd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* QR Code */
-.qr-container {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#qr-code {
-    display: block;
-    margin: 20px auto;
-    border: 1px solid #ddd;
-    padding: 8px;
-    border-radius: 10px;
-}
-
-/* Footer */
-footer {
-    background: linear-gradient(135deg, #004d40, #00796b);
-    color: #fff;
-    padding: 15px;
-    text-align: center;
-    font-size: 1em;
-    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
-}
-
-footer p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #e0f2f1;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .product-list {
-        grid-template-columns: repeat(2, 1fr);
+// Function to get the user location and generate a WhatsApp share link
+function getLocation() {
+    const locationInfo = document.getElementById('location-info');
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        locationInfo.textContent = "Geolocation is not supported by this browser.";
+    }
+    function showPosition(position) { 
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        // Check if within 10km
+        if (checkProximity(lat, lng)) {
+            alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
+            const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${lat},${lng}`;
+            // Display the location information
+            locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
+            // Get cart items as a list
+            const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+            // If the cart is empty
+            const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
+            // Final message with location and cart details
+            const message = `${locationMessage}\n\n${cartMessage}`;
+            // Specify the recipient phone number (including country code)
+            const phoneNumber = '919146028969'; 
+            
+            // Create WhatsApp share link with pre-filled message and phone number
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Provide the user with a link to share on WhatsApp
+            locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
+            
+            // Enable the Share Location button after successful location retrieval
+            document.getElementById('share-location-btn').disabled = false;
+        } else {
+            // Notify the user that they are not within range
+            alert('You are not within the delivery range (10 km from store).');
+            locationInfo.textContent = "You are not within the delivery range (10 km from store).";
+        }
+    }
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                locationInfo.textContent = "User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                locationInfo.textContent = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                locationInfo.textContent = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                locationInfo.textContent = "An unknown error occurred.";
+                break;
+        }
     }
 }
-
-@media (max-width: 480px) {
-    .product-list {
-        grid-template-columns: 1fr;
+// Function to handle tab switching
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
     }
-
-    h1 {
-        font-size: 1.8em;
+    tablinks = document.getElementsByClassName("tab-links")[0].children;
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "#00796b";
     }
-
-    h2 {
-        font-size: 1.5em;
-    }
-
-    h3 {
-        font-size: 1.1em;
-    }
-
-    button {
-        padding: 8px 16px;
-    }
-
-    #cart-total, #total-with-fee {
-        font-size: 1.2em;
+    document.getElementById(tabName).style.display = "grid";
+    evt.currentTarget.style.backgroundColor = "#004d40";
+}
+// Fetch the visitor counter value from the raw GitHub URL
+async function fetchVisitorCounter() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
+        if (response.ok) {
+            const text = await response.text();
+            document.getElementById('visitor-counter').textContent = text.trim();
+        } else {
+            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
+        }
+    } catch (error) {
+        console.error('Error fetching visitor counter:', error);
+        document.getElementById('visitor-counter').textContent = "Error";
     }
 }
+// Call the function to update the visitor counter
+fetchVisitorCounter();
 
-#location-info {
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #d32f2f; /* Red text for out of range */
+
+// Function to generate a UPI deep link
+function generateUPILink() {
+    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    // Check if cart is empty
+    if (cart.length === 0) {
+        alert('Cart is empty. Add items to the cart to proceed.');
+        document.getElementById('upi-link').style.display = 'none';
+        document.getElementById('share-location-btn').disabled = true;  // Disable Share Location button
+        return;
+    }
+    const totalWithFee = cartTotal + 150;
+    const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
+    const name = "Midnight Stationary";
+    const transactionNote = "Stationery Order Payment";
+    // Create the UPI deep link
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${totalWithFee}&tn=${encodeURIComponent(transactionNote)}`;
+    // Update the UPI button link and show it
+    const upiLinkButton = document.getElementById('upi-link');
+    upiLinkButton.href = upiLink;
+    upiLinkButton.style.display = 'inline-block';
+    // Enable the Share Location button after UPI link is generated
+    document.getElementById('share-location-btn').disabled = false;
 }
