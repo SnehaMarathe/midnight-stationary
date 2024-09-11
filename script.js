@@ -32,6 +32,50 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('share-location-btn').disabled = true;
 });
 
+// Fetch Product Data and Display Products
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            // Populate Chart Paper Tab
+            const chartPaperContainer = document.getElementById('chart-paper');
+            chartPaperContainer.innerHTML = data.chartPaper.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Populate Glues Tab
+            const gluesContainer = document.getElementById('glue');
+            gluesContainer.innerHTML = data.glues.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Populate Craft Materials Tab
+            const craftMaterialsContainer = document.getElementById('craft-materials');
+            craftMaterialsContainer.innerHTML = data.craftMaterials.map(product => `
+                <div class="product-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join('');
+
+            // Open the first tab by default
+            document.querySelector(".tab-links div").click();
+        })
+        .catch(error => console.error('Error loading the product data:', error));
+});
+
 // Add to Cart Function
 function addToCart(productId) {
     // Assuming products are globally available or fetched again
