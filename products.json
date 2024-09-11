@@ -84,9 +84,9 @@
         },
         {
             "id": 3,
-            "name": "Tape",
-            "price": 10,
-            "image": "images/chart-paper.jpg"
+            "name": "Double Side Tape",
+            "price": 75,
+            "image": "images/double-sided-tape.jpg"
         }
     ]
 }
