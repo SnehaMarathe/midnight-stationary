@@ -19,7 +19,7 @@ header {
     border-bottom: 3px solid #004d40;
 }
 
-header h1, header p {
+header h1, header p, header p1 {
     color: #fff; /* Ensures that both h1 and p inside header are white */
     margin: 0;
 }
@@ -31,6 +31,13 @@ header h1 {
 
 header p {
     font-size: 1em;
+    margin-top: 5px;
+    font-weight: 300;
+    color: #e0f2f1;
+}
+
+header p1 {
+    font-size: 0.5em;
     margin-top: 5px;
     font-weight: 300;
     color: #e0f2f1;
