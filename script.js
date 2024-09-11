@@ -5,7 +5,7 @@ let cart = [];
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
     const dLat = deg2rad(lat2 - lat1);
-    const dLon = deg2rad(lon2 - lon1);
+    const dLon = deg2rad(lon1 - lon2);
     const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
@@ -27,48 +27,9 @@ function checkProximity(lat, lon) {
     return distance <= 10; // Check if distance is within 10km
 }
 
-// Fetch Product Data and Display Products
+// Disable the "Share My Location" button by default
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('products.json')
-        .then(response => response.json())
-        .then(data => {
-            // Populate Chart Paper Tab
-            const chartPaperContainer = document.getElementById('chart-paper');
-            chartPaperContainer.innerHTML = data.chartPaper.map(product => `
-                <div class="product-item">
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
-                </div>
-            `).join('');
-
-            // Populate Glues Tab
-            const gluesContainer = document.getElementById('glue');
-            gluesContainer.innerHTML = data.glues.map(product => `
-                <div class="product-item">
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
-                </div>
-            `).join('');
-
-            // Populate Craft Materials Tab
-            const craftMaterialsContainer = document.getElementById('craft-materials');
-            craftMaterialsContainer.innerHTML = data.craftMaterials.map(product => `
-                <div class="product-item">
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
-                </div>
-            `).join('');
-
-            // Open the first tab by default
-            document.querySelector(".tab-links div").click();
-        })
-        .catch(error => console.error('Error loading the product data:', error));
+    document.getElementById('share-location-btn').disabled = true;
 });
 
 // Add to Cart Function
@@ -109,6 +70,15 @@ function updateCart() {
 // Function to generate a UPI QR code
 function generateQRCode() {
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+
+    // Check if cart is empty, do not generate QR code if empty
+    if (cart.length === 0) {
+        alert('Cart is empty. Add items to the cart to generate a QR code.');
+        document.getElementById('qr-code').style.display = 'none';
+        document.getElementById('share-location-btn').disabled = true;  // Disable Share Location button
+        return;
+    }
+
     const totalWithFee = cartTotal + 500;
     const upiId = "maratheratnakar-1@okaxis";  // Replace with your UPI ID
     const name = "Midnight Stationary";
@@ -124,6 +94,9 @@ function generateQRCode() {
     const qrCodeImg = document.getElementById('qr-code');
     qrCodeImg.src = qrCodeURL;
     qrCodeImg.style.display = 'block';
+
+    // Enable the Share Location button after QR code is generated
+    document.getElementById('share-location-btn').disabled = false;
 }
 
 // Function to get the user location and generate a WhatsApp share link
@@ -165,6 +138,7 @@ function getLocation() {
             // Provide the user with a link to share on WhatsApp
             locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
         } else {
+            // Notify the user that they are not within range
             locationInfo.textContent = "You are not within the delivery range (10 km from store).";
         }
     }
