@@ -1,6 +1,7 @@
 name: Update Visitor Counter
 
-on:
+on
+  workflow_dispatch:  # Allows manual triggering
   schedule:
     - cron: '*/1 * * * *'  # Runs every 30 minutes
 
