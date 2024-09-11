@@ -29,11 +29,10 @@ function checkProximity(lat, lon) {
 
 // Disable the "Share My Location" button by default
 document.addEventListener('DOMContentLoaded', function() {
+    // Disable the "Share My Location" button by default
     document.getElementById('share-location-btn').disabled = true;
-});
 
-// Fetch Product Data and Display Products
-document.addEventListener('DOMContentLoaded', function() {
+    // Fetch Product Data and Display Products
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
