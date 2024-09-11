@@ -1,4 +1,4 @@
-// Cart Array
+// Cart Array update
 let cart = [];
 
 // Haversine Formula to calculate distance between two lat/long points in kilometers
