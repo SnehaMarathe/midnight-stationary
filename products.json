@@ -46,9 +46,9 @@
         },
         {
             "id": 2,
-            "name": "Glue Bottle",
-            "price": 25,
-            "image": "images/chart-paper.jpg"
+            "name": "Fevikwik, Pack Of 6",
+            "price": 65,
+            "image": "images/fevi-quick.jpg"
         },
         {
             "id": 3,
@@ -72,9 +72,9 @@
     "craftMaterials": [
         {
             "id": 1,
-            "name": "Craft Paper",
+            "name": "Pen Knife",
             "price": 30,
-            "image": "images/chart-paper.jpg"
+            "image": "images/pen_knife.jpg"
         },
         {
             "id": 2,
