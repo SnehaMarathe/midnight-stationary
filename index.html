@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Stationary</title>
-<link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>MidNight Stationary? Not Anymore!</h1>
         <p class="cta">Grab Your Stationery from 8 PM to 8 AM—Delivered Right to Your Door. <br>
-        No Login Required: Just Add Your Items, Scan the QR Code, Pay, and Send Your Location!
+        No Login Required: Just Add Your Items, Scan the QR Code, Pay, and Send Your Location!</p>
     </header>
     
     <div class="container">
@@ -39,7 +39,13 @@
             <h3 id="total-with-fee">Convinience Charge: ₹150</h3>
         </div>
 
-        <button onclick="generateQRCode()">Pay</button>
+        <!-- Button for generating QR Code -->
+        <button onclick="generateQRCode()">Pay with QR Code</button>
+
+        <!-- Button for UPI Payment -->
+        <a id="upi-link" href="#" target="_blank" style="display:none;">
+            <button>Pay with UPI</button>
+        </a>
 
         <div class="qr-container">
             <h3>Scan the QR Code to Pay</h3>
