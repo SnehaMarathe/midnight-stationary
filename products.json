@@ -29,6 +29,12 @@
             "name": "Brown Chart Paper",
             "price": 50,
             "image": "images/brown-chart-paper.jpg"
+        },
+        {
+            "id": 6,
+            "name": "Graph Paper Book",
+            "price": 68,
+            "image": "images/graph-book.jpg"
         }        
     ],
     "glues": [
@@ -43,6 +49,24 @@
             "name": "Glue Bottle",
             "price": 25,
             "image": "images/chart-paper.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Black Sketch Pen",
+            "price": 45,
+            "image": "images/black_sketch_pen.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Compass Box",
+            "price": 85,
+            "image": "images/compass_box.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Poster Colour",
+            "price": 85,
+            "image": "images/doms_poster_colour.jpg"
         }
     ],
     "craftMaterials": [
