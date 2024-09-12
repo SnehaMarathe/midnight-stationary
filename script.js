@@ -91,6 +91,7 @@ function addToCart(productId) {
         .catch(error => console.error('Error fetching product data:', error));
 }
 
+/*
 // Update Cart Display
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
@@ -102,6 +103,33 @@ function updateCart() {
         cartItem.innerHTML = `
             <p>${item.name} - ₹${item.price}</p>
             <button onclick="removeFromCart(${index})">X</button>
+        `;
+        cartItems.appendChild(cartItem);
+    });
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p>No items in cart.</p>';
+    }
+
+    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
+}
+*/
+
+// Update Cart Display
+function updateCart() {
+    const cartItems = document.querySelector('.cart-items');
+    cartItems.innerHTML = '';
+
+    cart.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+            <div class="cart-item-content">
+                <p>${item.name} - ₹${item.price}</p>
+                <button onclick="removeFromCart(${index})" class="remove-button">X</button>
+            </div>
         `;
         cartItems.appendChild(cartItem);
     });
