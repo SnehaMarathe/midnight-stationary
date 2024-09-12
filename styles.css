@@ -287,10 +287,14 @@ footer p {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 16px;
+    width: 30px; /* Adjust width */
+    height: 30px; /* Adjust height */
+    font-size: 18px; /* Adjust font size */
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    line-height: 20px;
+    line-height: 1;
+    padding: 0; /* Remove default padding */
 }
