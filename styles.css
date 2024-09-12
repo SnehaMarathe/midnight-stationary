@@ -32,7 +32,7 @@ header {
 
 .logo {
     width: 100%; /* Set the logo to take up the entire width */
-    height: auto;
+    height: 100%; /*auto*/
 }
 
 .header-text {
