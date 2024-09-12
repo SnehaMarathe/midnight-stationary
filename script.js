@@ -163,11 +163,11 @@ function getLocation() {
                 locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
 
                 document.getElementById('share-location-btn').disabled = false;
-                qrCodeButton.disabled = false;
+                generateQRCode.disabled = false;
             } else {
                 alert('You are not within the delivery range (10 km from any of our stores).');
                 locationInfo.textContent = "You are not within the delivery range (10 km from any of our stores).";
-                qrCodeButton.disabled = true;
+                generateQRCode.disabled = true;
             }
         }, showError);
     } else {
