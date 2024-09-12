@@ -12,7 +12,7 @@ body {
 header {
     background: linear-gradient(135deg, #004d40, #00796b);
     color: #fff;
-    padding: 1em 0;
+    /* padding: 1em 0; */
     text-align: center;
     font-size: 1.4em;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -25,7 +25,7 @@ header {
     align-items: center;
     justify-content: space-between; /* Distribute space between the logo and text */
     width: 100%; /* Occupies the entire width of the page */
-    padding: 10px 20px; /* Add padding for spacing */
+    /* padding: 10px 20px; /* Add padding for spacing */ */
     box-sizing: border-box; /* Ensure padding doesn't affect width */
     background-color: #f8f8f8; /* Optional: Background color for the header */
 }
