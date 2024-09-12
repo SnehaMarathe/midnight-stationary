@@ -19,6 +19,23 @@ header {
     border-bottom: 3px solid #004d40;
 }
 
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 80px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 20px;
+}
+
+.header-text {
+    text-align: left;
+}
+
 header h1, header p, header p1 {
     color: #fff; /* Ensures that both h1 and p inside header are white */
     margin: 0;
