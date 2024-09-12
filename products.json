@@ -67,6 +67,12 @@
             "name": "Poster Colour",
             "price": 85,
             "image": "images/doms_poster_colour.jpg"
+        },
+        {
+            "id": 56,
+            "name": "Multicolor Sketch Pen",
+            "price": 45,
+            "image": "images/multicolor_sketch_pen.jpg"
         }
     ],
     "craftMaterials": [
