@@ -31,7 +31,7 @@ header {
 }
 
 .logo {
-    width: 300px; /* Adjust size as needed */
+    width: auto; /* Adjust size as needed */
     height: auto;
     margin-right: 20px;
 }
