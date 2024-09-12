@@ -201,6 +201,7 @@ function generateQRCode() {
     document.getElementById('share-location-btn').disabled = false;
 }
 
+/*
 // Function to get the user location and generate a WhatsApp share link
 function getLocation() {
     const locationInfo = document.getElementById('location-info');
@@ -210,7 +211,57 @@ function getLocation() {
     } else {
         locationInfo.textContent = "Geolocation is not supported by this browser.";
     }
+*/
 
+// Function to get user location and check proximity
+function getLocation() {
+    const locationInfo = document.getElementById('location-info');
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Check if within 10km of any target location
+            if (checkProximity(lat, lon, targetLocations)) {
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
+                const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${lat},${lon}`;
+
+                // Display the location information
+                locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lon}`;
+
+                // Get cart items as a list
+                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+
+                // If the cart is empty
+                const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
+
+                // Final message with location and cart details
+                const message = `${locationMessage}\n\n${cartMessage}`;
+
+                // Specify the recipient phone number (including country code)
+                const phoneNumber = '919146028969'; 
+                
+                // Create WhatsApp share link with pre-filled message and phone number
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                
+                // Provide the user with a link to share on WhatsApp
+                locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
+                
+                // Enable the Share Location button after successful location retrieval
+                document.getElementById('share-location-btn').disabled = false;
+            } else {
+                // Notify the user that they are not within range
+                alert('You are not within the delivery range (10 km from any of our stores).');
+                locationInfo.textContent = "You are not within the delivery range (10 km from any of our stores).";
+            }
+        }, showError);
+    } else {
+        locationInfo.textContent = "Geolocation is not supported by this browser.";
+    }
+}
+
+/*
     function showPosition(position) { 
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
@@ -249,7 +300,7 @@ function getLocation() {
             locationInfo.textContent = "You are not within the delivery range (10 km from store).";
         }
     }
-
+*/
     function showError(error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
