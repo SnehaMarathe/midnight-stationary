@@ -143,6 +143,7 @@ function generateQRCode() {
 // Function to get user location and check proximity
 function getLocation() {
     const locationInfo = document.getElementById('location-info');
+    const qrCodeButton = document.getElementById('generate-qr-code-btn'); // Correct reference
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -163,11 +164,11 @@ function getLocation() {
                 locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
 
                 document.getElementById('share-location-btn').disabled = false;
-                generateQRCode.disabled = false;
+                qrCodeButton.disabled = false;
             } else {
                 alert('You are not within the delivery range (10 km from any of our stores).');
                 locationInfo.textContent = "You are not within the delivery range (10 km from any of our stores).";
-                generateQRCode.disabled = true;
+                qrCodeButton.disabled = true;
             }
         }, showError);
     } else {
