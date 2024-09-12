@@ -41,7 +41,7 @@ function checkProximity(lat, lon, targetLocations) {
 const targetLocations = [
     { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
     { lat: 17.676095, lon: 73.986140 }, // Location 2 - Satara
-    { lat: 18.7311918, lon: 73.8053528 }, // Location 3 - Chakan
+    // { lat: 18.7311918, lon: 73.8053528 }, // Location 3 - Chakan
     // Add more locations as needed
 ];
 
@@ -251,10 +251,17 @@ function getLocation() {
                 
                 // Enable the Share Location button after successful location retrieval
                 document.getElementById('share-location-btn').disabled = false;
+
+                // Enable the QR code button if the location is within range
+                qrCodeButton.disabled = false;
+                
             } else {
                 // Notify the user that they are not within range
                 alert('You are not within the delivery range (10 km from any of our stores).');
                 locationInfo.textContent = "You are not within the delivery range (10 km from any of our stores).";
+
+                // Disable the QR code button if the location is within range
+                qrCodeButton.disabled = true;
             }
         }, showError);
     } else {
