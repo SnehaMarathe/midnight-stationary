@@ -87,6 +87,18 @@
             "name": "Double Side Tape",
             "price": 75,
             "image": "images/double-sided-tape.jpg"
+        },
+        {
+            "id": 104,
+            "name": "Packaging Tape (Brown, 50 m)",
+            "price": 145,
+            "image": "images/brown-tape.jpg"
+        },
+        {
+            "id": 105,
+            "name": "Transparant Tape (Brown, 50 m)",
+            "price": 165,
+            "image": "images/transparant-tape.jpg"
         }
     ]
 }
