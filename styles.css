@@ -23,7 +23,11 @@ header {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Distribute space between the logo and text */
+    width: 100%; /* Occupies the entire width of the page */
+    padding: 10px 20px; /* Add padding for spacing */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    background-color: #f8f8f8; /* Optional: Background color for the header */
 }
 
 .logo {
@@ -33,7 +37,9 @@ header {
 }
 
 .header-text {
-    text-align: left;
+    flex-grow: 1; /* Allows the text to expand and fill the remaining space */
+    text-align: left; /* Align the text to the left */
+    font-size: 24px; /* Adjust font size */
 }
 
 header h1, header p, header p1 {
