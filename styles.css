@@ -31,9 +31,8 @@ header {
 }
 
 .logo {
-    width: auto; /* Adjust size as needed */
+    width: 100%; /* Set the logo to take up the entire width */
     height: auto;
-    margin-right: 20px;
 }
 
 .header-text {
