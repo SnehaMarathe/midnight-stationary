@@ -32,7 +32,31 @@ const targetLocations = [
     // Add more locations as needed
 ];
 
-// Event Listener for DOMContentLoaded
+// Add this section to ensure correct structure of HTML and JavaScript
+
+// Function to handle tab switching
+function openTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tab-content");
+    
+    // Hide all tab content
+    for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    
+    // Reset background color for all tabs
+    const tablinks = document.getElementsByClassName("tab-links")[0].children;
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "#00796b";  // Adjust tab color
+    }
+    
+    // Show the selected tab
+    document.getElementById(tabName).style.display = "grid";
+    
+    // Change the background of the clicked tab
+    evt.currentTarget.style.backgroundColor = "#004d40";
+}
+
+// DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
     document.getElementById('share-location-btn').disabled = true;
@@ -47,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             populateTab('craft-materials', data.craftMaterials);
 
             // Open the first tab by default
-            document.querySelector(".tab-links div").click();
+            document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
             // Check location and update UI accordingly
             getLocation();
@@ -58,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
+    
+    // Ensure each product has its respective content
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
