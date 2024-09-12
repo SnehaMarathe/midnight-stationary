@@ -174,11 +174,11 @@ h3 {
 }
 
 .cart-item {
-    background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 10px;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
 #cart-total, #total-with-fee {
@@ -275,7 +275,14 @@ footer p {
     color: #d32f2f; /* Red text for out of range */
 }
 
-.cart-item button {
+.cart-item-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.remove-button {
     background-color: red;
     color: white;
     border: none;
@@ -284,4 +291,6 @@ footer p {
     height: 20px;
     font-size: 16px;
     cursor: pointer;
+    text-align: center;
+    line-height: 20px;
 }
