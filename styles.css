@@ -8,6 +8,13 @@ body {
     line-height: 1.5;
 }
 
+/* Reset margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* Header */
 header {
     background: linear-gradient(135deg, #004d40, #00796b);
