@@ -274,3 +274,14 @@ footer p {
     font-weight: bold;
     color: #d32f2f; /* Red text for out of range */
 }
+
+.cart-item button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
