@@ -1,4 +1,3 @@
-// Cart Array update
 let cart = [];
 
 // Haversine Formula to calculate distance between two lat/long points in kilometers
@@ -27,10 +26,18 @@ function checkProximity(lat, lon) {
     return distance <= 10; // Check if distance is within 10km
 }
 
-// Disable the "Share My Location" button by default
+// Disable the "Share My Location" and other relevant buttons by default
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
     document.getElementById('share-location-btn').disabled = true;
+
+    // Disable the "Generate QR Code" button by default
+    document.getElementById('generate-qr-btn').disabled = true;
+
+    // Disable all "Add to Cart" buttons by default
+    document.querySelectorAll('button.add-to-cart-btn').forEach(button => {
+        button.disabled = true;
+    });
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -43,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})" disabled>Add to Cart</button>
                 </div>
             `).join('');
 
@@ -54,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})" disabled>Add to Cart</button>
                 </div>
             `).join('');
 
@@ -65,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>Price: ₹${product.price}</p>
-                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})" disabled>Add to Cart</button>
                 </div>
             `).join('');
 
@@ -112,6 +119,62 @@ function updateCart() {
     document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
 }
 
+// Function to get the user location and enable/disable buttons based on proximity
+function getLocation() {
+    const locationInfo = document.getElementById('location-info');
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        locationInfo.textContent = "Geolocation is not supported by this browser.";
+    }
+
+    function showPosition(position) { 
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        // Check if within 10km
+        if (checkProximity(lat, lng)) {
+            alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
+            locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
+
+            // Enable relevant buttons since the user is within the delivery range
+            document.querySelectorAll('button.add-to-cart-btn').forEach(button => {
+                button.disabled = false;
+            });
+            document.getElementById('generate-qr-btn').disabled = false;
+            document.getElementById('share-location-btn').disabled = false;
+        } else {
+            alert('You are not within the delivery range (10 km from store).');
+            locationInfo.textContent = "You are not within the delivery range (10 km from store).";
+
+            // Disable buttons since the user is out of delivery range
+            document.querySelectorAll('button.add-to-cart-btn').forEach(button => {
+                button.disabled = true;
+            });
+            document.getElementById('generate-qr-btn').disabled = true;
+            document.getElementById('share-location-btn').disabled = true;
+        }
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                locationInfo.textContent = "User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                locationInfo.textContent = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                locationInfo.textContent = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                locationInfo.textContent = "An unknown error occurred.";
+                break;
+        }
+    }
+}
+
 // Function to generate a UPI QR code
 function generateQRCode() {
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
@@ -145,88 +208,6 @@ function generateQRCode() {
 
     // Enable the Share Location button after QR code is generated
     document.getElementById('share-location-btn').disabled = false;
-}
-
-// Function to get the user location and generate a WhatsApp share link
-function getLocation() {
-    const locationInfo = document.getElementById('location-info');
-    
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-        locationInfo.textContent = "Geolocation is not supported by this browser.";
-    }
-
-    function showPosition(position) { 
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-
-        // Check if within 10km
-        if (checkProximity(lat, lng)) {
-            alert('GREAT YOU ARE IN OUR 30min DELIVERY RANGE');
-            const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${lat},${lng}`;
-
-            // Display the location information
-            locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}`;
-
-            // Get cart items as a list
-            const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
-
-            // If the cart is empty
-            const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
-
-            // Final message with location and cart details
-            const message = `${locationMessage}\n\n${cartMessage}`;
-
-            // Specify the recipient phone number (including country code)
-            const phoneNumber = '919146028969'; 
-            
-            // Create WhatsApp share link with pre-filled message and phone number
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            
-            // Provide the user with a link to share on WhatsApp
-            locationInfo.innerHTML += `<br><a href="${whatsappURL}" target="_blank">Share My Location and Cart via WhatsApp</a>`;
-            
-            // Enable the Share Location button after successful location retrieval
-            document.getElementById('share-location-btn').disabled = false;
-        } else {
-            // Notify the user that they are not within range
-            alert('You are not within the delivery range (10 km from store).');
-            locationInfo.textContent = "You are not within the delivery range (10 km from store).";
-        }
-    }
-
-    function showError(error) {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-                locationInfo.textContent = "User denied the request for Geolocation.";
-                break;
-            case error.POSITION_UNAVAILABLE:
-                locationInfo.textContent = "Location information is unavailable.";
-                break;
-            case error.TIMEOUT:
-                locationInfo.textContent = "The request to get user location timed out.";
-                break;
-            case error.UNKNOWN_ERROR:
-                locationInfo.textContent = "An unknown error occurred.";
-                break;
-        }
-    }
-}
-
-// Function to handle tab switching
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tab-links")[0].children;
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "#00796b";
-    }
-    document.getElementById(tabName).style.display = "grid";
-    evt.currentTarget.style.backgroundColor = "#004d40";
 }
 
 // Fetch the visitor counter value from the raw GitHub URL
