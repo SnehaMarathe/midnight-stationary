@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latenight Stationary</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <header>
@@ -42,7 +43,9 @@
 
         <!-- Button for generating QR Code -->
         <!-- Button for generating QR Code -->
-        <button id="generate-qr-code-btn" onclick="generateQRCode()">Pay with QR Code</button>
+        <!-- Replace this button in your HTML -->
+        <button id="generate-qr-code-btn" onclick="initiateRazorpayPayment()">Pay with UPI via Razorpay</button>
+
 
         <!-- Button for UPI Payment -->
         <a id="upi-link" href="#" target="_blank" style="display:none;">
