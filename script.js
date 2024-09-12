@@ -96,10 +96,13 @@ function updateCart() {
     const cartItems = document.querySelector('.cart-items');
     cartItems.innerHTML = '';
 
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `<p>${item.name} - ₹${item.price}</p>`;
+        cartItem.innerHTML = `
+            <p>${item.name} - ₹${item.price}</p>
+            <button onclick="removeFromCart(${index})">X</button>
+        `;
         cartItems.appendChild(cartItem);
     });
 
@@ -110,6 +113,12 @@ function updateCart() {
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
     document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
     document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
+}
+
+// Function to remove an item from the cart
+function removeFromCart(index) {
+    cart.splice(index, 1); // Remove the item at the specified index
+    updateCart(); // Update the cart display
 }
 
 // Function to generate a UPI QR code
