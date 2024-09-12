@@ -125,10 +125,10 @@ function initiateRazorpayPayment() {
     const totalWithFee = cartTotal + 150; // Add convenience fee
 
     const options = {
-        "key": "YOUR_RAZORPAY_KEY", // Replace with your Razorpay API key
+        "key": "u9rEPZkyLljZ2sYOWlxjb8O3", // Replace with your Razorpay API key
         "amount": totalWithFee * 100, // Razorpay accepts amount in paise (INR * 100)
         "currency": "INR",
-        "name": "Midnight Stationery",
+        "name": "Latenight Stationery",
         "description": "Stationery Order Payment",
         "image": "https://your-logo-url.com/logo.png", // Optional logo
         "handler": function(response) {
