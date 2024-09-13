@@ -173,9 +173,9 @@ function initiateRazorpayPayment() {
             sendWhatsAppMessage(); // Send cart details via WhatsApp after payment success
         },
         "prefill": {
-            "name": "Customer Name", // You can prefill customer details here
-            "email": "customer@example.com",
-            "contact": "9999999999"
+            "name": customerName, // Prefill customer name from the form
+            "email": customerEmail, // Prefill customer email from the form
+            "contact": customerContact // Prefill customer contact from the form
         },
         "theme": {
             "color": "#3399cc"
@@ -205,7 +205,8 @@ function sendWhatsAppMessage() {
     const cartMessage = cart.length > 0 
         ? `I have ordered the following items: ${cartItems}` 
         : "No items in the cart.";
-
+    const message = customerName;
+    const message = customerContact;
     const message = `${locationMessage}\n\n${cartMessage}`;
 
     const phoneNumber = '919146028969'; // Replace with your phone number
