@@ -210,7 +210,7 @@ function sendWhatsAppMessage(customerName, customerContact, transactionId) {
     const customerDetails = `Customer Name: ${customerName}\nContact: ${customerContact}`;
     const transactionMessage = `Transaction ID: ${transactionId}`;
     
-    const message = `${locationMessage}\n\n${cartMessage}`;
+     const message = `${locationMessage}\n\n${cartMessage}\n\n${customerDetails}\n${transactionMessage}`;
 
     const phoneNumber = '919146028969'; // Replace with your phone number
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
