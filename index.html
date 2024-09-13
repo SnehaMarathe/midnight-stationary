@@ -9,12 +9,11 @@
 </head>
 <body>
     <header>
-         <h1>Late Night Stationery Store</h1>        
-        <p1 class="cta">Grab Your Stationery from 8 PM to 8 AM—Delivered Right to Your Door. <br>        
-            No Login Required: Just Add Your Items, Scan the QR Code, Pay, Send Your Location, and get your product delivered to your door step!</p1>
-
+        <h1>Late Night Stationery Store</h1>
+        <p class="cta">Grab Your Stationery from 8 PM to 8 AM—Delivered Right to Your Door. <br>        
+            No Login Required: Just Add Your Items, Scan the QR Code, Pay, Send Your Location, and get your product delivered to your door step!</p>
     </header>
-    
+
     <div class="container">
         <h2>Our Products</h2>
         <div class="tabs">
@@ -38,14 +37,25 @@
 
         <div id="cart-summary">
             <h3 id="cart-total">Total: ₹0</h3>
-            <h3 id="total-with-fee">Convinience Charge: ₹150</h3>
+            <h3 id="total-with-fee">Convenience Charge: ₹150</h3>
         </div>
 
-        <!-- Button for generating QR Code -->
-        <!-- Button for generating QR Code -->
-        <!-- Replace this button in your HTML -->
-        <button id="generate-qr-code-btn" onclick="initiateRazorpayPayment()">Pay with UPI via Razorpay</button>
+        <!-- Customer Details Form -->
+        <div class="customer-details">
+            <h2>Enter Your Details</h2>
+            <label for="customer-name">Name:</label>
+            <input type="text" id="customer-name" placeholder="Enter your name" required>
+            <br>
+            <label for="customer-email">Email:</label>
+            <input type="email" id="customer-email" placeholder="Enter your email" required>
+            <br>
+            <label for="customer-contact">Contact:</label>
+            <input type="tel" id="customer-contact" placeholder="Enter your contact number" required>
+            <br>
+        </div>
 
+        <!-- Button for generating QR Code and proceeding to payment -->
+        <button id="generate-qr-code-btn" onclick="initiateRazorpayPayment()">Pay with UPI via Razorpay</button>
 
         <!-- Button for UPI Payment -->
         <a id="upi-link" href="#" target="_blank" style="display:none;">
@@ -56,13 +66,12 @@
         <button id="share-location-btn" onclick="getLocation()" disabled>Share My Location</button>
         <div id="location-info"></div>
     </div>
-    
+
     <footer>
         <p>&copy; 2024 Latenight Stationery. All rights reserved.</p>
         <p>Visitors: <span id="visitor-counter">Loading...</span></p>
     </footer>
     
     <script src="script.js"></script>
-
 </body>
 </html>
