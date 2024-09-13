@@ -1,25 +1,5 @@
 // Cart Array initialization
 let cart = [];
-
-// Fetch the visitor counter value from the raw GitHub URL
-async function fetchVisitorCounter() {
-    try {
-        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
-        if (response.ok) {
-            const text = await response.text();
-            document.getElementById('visitor-counter').textContent = text.trim();
-        } else {
-            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
-        }
-    } catch (error) {
-        console.error('Error fetching visitor counter:', error);
-        document.getElementById('visitor-counter').textContent = "Error";
-    }
-}
-
-// Call the function to update the visitor counter
-fetchVisitorCounter();
-
 // Haversine Formula to calculate distance between two lat/long points in kilometers
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
@@ -267,6 +247,27 @@ function getLocation() {
         locationInfo.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
+
+/*
+// Fetch the visitor counter value from the raw GitHub URL
+async function fetchVisitorCounter() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
+        if (response.ok) {
+            const text = await response.text();
+            document.getElementById('visitor-counter').textContent = text.trim();
+        } else {
+            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
+        }
+    } catch (error) {
+        console.error('Error fetching visitor counter:', error);
+        document.getElementById('visitor-counter').textContent = "Error";
+    }
+}
+
+// Call the function to update the visitor counter
+fetchVisitorCounter();
+*/
 
 // QR Code Generation (Your implementation should be included here)
 function generateQRCode(message) {
