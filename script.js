@@ -170,7 +170,8 @@ function initiateRazorpayPayment() {
         "handler": function(response) {
             // Handle the success callback
             alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-            sendWhatsAppMessage(); // Send cart details via WhatsApp after payment success
+            // Call sendWhatsAppMessage with the transaction ID
+            sendWhatsAppMessage(customerName, customerContact, response.razorpay_payment_id); 
         },
         "prefill": {
             "name": customerName, // Prefill customer name from the form
@@ -187,7 +188,7 @@ function initiateRazorpayPayment() {
 }
 
 // Function to send WhatsApp message with cart details
-function sendWhatsAppMessage() {
+function sendWhatsAppMessage(customerName, customerContact, transactionId) {
     const locationInfo = document.getElementById('location-info');
     let lat = 0, lon = 0;
 
@@ -205,8 +206,10 @@ function sendWhatsAppMessage() {
     const cartMessage = cart.length > 0 
         ? `I have ordered the following items: ${cartItems}` 
         : "No items in the cart.";
-    const message = customerName;
-    const message = customerContact;
+    
+    const customerDetails = `Customer Name: ${customerName}\nContact: ${customerContact}`;
+    const transactionMessage = `Transaction ID: ${transactionId}`;
+    
     const message = `${locationMessage}\n\n${cartMessage}`;
 
     const phoneNumber = '919146028969'; // Replace with your phone number
