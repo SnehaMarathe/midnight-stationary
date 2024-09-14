@@ -286,7 +286,3 @@ async function fetchVisitorCounter() {
 
 // Call the function to update the visitor counter
 fetchVisitorCounter();
-// QR Code Generation (Your implementation should be included here)
-function generateQRCode(message) {
-    // Your QR code logic should go here
-}
