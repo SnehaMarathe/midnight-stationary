@@ -168,7 +168,7 @@ function initiateRazorpayPayment() {
         "image": "https://your-logo-url.com/logo.png", // Optional logo
         "handler": function(response) {
             // Handle the success callback
-            alert("Payment Successful! Now you will be redirected to Whatsapp for placing the order, Sit Back and Relax  Payment ID: " + response.razorpay_payment_id);
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
             // Call sendWhatsAppMessage with the transaction ID
             sendWhatsAppMessage(customerName, customerContact, response.razorpay_payment_id); 
         },
@@ -286,9 +286,7 @@ async function fetchVisitorCounter() {
 
 // Call the function to update the visitor counter
 fetchVisitorCounter();
-
-// Function to generate a UPI deep link
-function generateUPILink() {
-
+// QR Code Generation (Your implementation should be included here)
+function generateQRCode(message) {
+    // Your QR code logic should go here
 }
-
