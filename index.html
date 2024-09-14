@@ -6,7 +6,6 @@
     <title>Late Night Stationery Haven</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <header>
@@ -15,56 +14,57 @@
             No Login Hassles: <strong>Just Add Your Favorites, Scan the QR Code, Pay, Share Your Location, and Get Ready for a Midnight Delivery!</strong> 🚀</p>
     </header>
 
-    <div class="container">
-        <h2>Our Products</h2>
-        <div class="tabs">
-            <div class="tab-links">
-                <div onclick="openTab(event, 'chart-paper')">Chart Paper</div>
-                <div onclick="openTab(event, 'glue')">Stationary</div>
-                <div onclick="openTab(event, 'craft-materials')">Essentials</div>
+    <main class="container">
+        <section class="product-section">
+            <h2>Our Products</h2>
+            <div class="tabs">
+                <div class="tab-links">
+                    <div onclick="openTab(event, 'chart-paper')">Chart Paper</div>
+                    <div onclick="openTab(event, 'glue')">Stationary</div>
+                    <div onclick="openTab(event, 'craft-materials')">Essentials</div>
+                </div>
             </div>
-        </div>
 
-        <div id="chart-paper" class="tab-content product-list"></div>
-        <div id="glue" class="tab-content product-list"></div>
-        <div id="craft-materials" class="tab-content product-list"></div>
-    </div>
+            <div id="chart-paper" class="tab-content product-list"></div>
+            <div id="glue" class="tab-content product-list"></div>
+            <div id="craft-materials" class="tab-content product-list"></div>
+        </section>
 
-    <div class="container">
-        <h2>Your Cart</h2>
-        <div class="cart-items">
-            <p>No items in cart.</p>
-        </div>
+        <section class="cart-section">
+            <h2>Your Cart</h2>
+            <div class="cart-items">
+                <p>No items in cart.</p>
+            </div>
 
-        <div id="cart-summary">
-            <h3 id="cart-total">Total: ₹0</h3>
-            <h3 id="total-with-fee">Convenience Charge: ₹150</h3>
-        </div>
+            <div id="cart-summary">
+                <h3 id="cart-total">Total: ₹0</h3>
+                <h3 id="total-with-fee">Convenience Charge: ₹150</h3>
+            </div>
 
-        <h2>Enter Your Details</h2>
-        <div class="form-container">
-            <form id="customer-form">
-                <div class="form-group">
-                    <label for="customer-name">Name:</label>
-                    <input type="text" id="customer-name" placeholder="Enter your name" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="customer-email">Email:</label>
-                    <input type="email" id="customer-email" placeholder="Enter your email" required>
-                </div>
-        
-                <div class="form-group">
-                    <label for="customer-contact">Contact:</label>
-                    <input type="tel" id="customer-contact" placeholder="Enter your contact number" required>
-                </div>
-            </form>
-        </div>
+            <h2>Enter Your Details</h2>
+            <div class="form-container">
+                <form id="customer-form">
+                    <div class="form-group">
+                        <label for="customer-name">Name:</label>
+                        <input type="text" id="customer-name" placeholder="Enter your name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="customer-email">Email:</label>
+                        <input type="email" id="customer-email" placeholder="Enter your email" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="customer-contact">Contact:</label>
+                        <input type="tel" id="customer-contact" placeholder="Enter your contact number" required>
+                    </div>
+                </form>
+            </div>
 
-        <!-- Button for generating QR Code and proceeding to payment -->
-        <button id="generate-qr-code-btn" onclick="initiateRazorpayPayment()">Pay with UPI via Razorpay</button>
-
-    </div>
+            <!-- Button for generating QR Code and proceeding to payment -->
+            <button id="generate-qr-code-btn" onclick="initiateRazorpayPayment()">Pay with UPI via Razorpay</button>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2024 Late Night Stationery Haven. All rights reserved.</p>
