@@ -168,7 +168,7 @@ function initiateRazorpayPayment() {
         "image": "https://your-logo-url.com/logo.png", // Optional logo
         "handler": function(response) {
             // Handle the success callback
-            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            alert("Payment Successful! You will Now be directed to Whatsapp for sending us the cart details, Once you Send the Cart Details, Sit Back and Relax your order will be delivered shortly ! Payment ID: " + response.razorpay_payment_id);
             // Call sendWhatsAppMessage with the transaction ID
             sendWhatsAppMessage(customerName, customerContact, response.razorpay_payment_id); 
         },
