@@ -56,7 +56,7 @@ function openTab(evt, tabName) {
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
-    document.getElementById('share-location-btn').disabled = true;
+    // document.getElementById('share-location-btn').disabled = true;
 
     // Fetch Product Data and Display Products
     fetch('products.json')
