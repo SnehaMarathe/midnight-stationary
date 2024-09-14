@@ -173,14 +173,6 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
-.remove-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
 #cart-total, #total-with-fee {
     font-size: 1.4em;
     font-weight: bold;
