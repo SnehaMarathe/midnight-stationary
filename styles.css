@@ -173,6 +173,24 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
+.cart-item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-item-content p {
+    margin: 0; /* Remove default margin to align better */
+}
+
+.remove-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 #cart-total, #total-with-fee {
     font-size: 1.4em;
     font-weight: bold;
