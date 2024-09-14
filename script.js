@@ -186,19 +186,45 @@ function initiateRazorpayPayment() {
     rzp.open();
 }
 
+// Global variables to store latitude and longitude
+let currentLat = null;
+let currentLon = null;
+
+// Function to get user location and check proximity
+function getLocation() {
+    const locationInfo = document.getElementById('location-info');
+    const qrCodeButton = document.getElementById('generate-qr-code-btn'); // Correct reference
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            currentLat = position.coords.latitude;
+            currentLon = position.coords.longitude;
+
+            if (checkProximity(currentLat, currentLon, targetLocations)) {
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
+                locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
+                
+                const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
+                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+                const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
+                const message = `${locationMessage}\n\n${cartMessage}`;
+                
+                qrCodeButton.addEventListener('click', () => generateQRCode(message));
+            } else {
+                alert('Sorry, you are outside our delivery range.');
+                locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
+            }
+        });
+    } else {
+        locationInfo.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
 // Function to send WhatsApp message with cart details
 function sendWhatsAppMessage(customerName, customerContact, transactionId) {
-    const locationInfo = document.getElementById('location-info');
-    let lat = 0, lon = 0;
-
-    // Get latitude and longitude from location info (if available)
-    if (locationInfo.textContent.includes("Latitude")) {
-        lat = locationInfo.textContent.split('Latitude: ')[1].split('<br>')[0];
-        lon = locationInfo.textContent.split('Longitude: ')[1];
-    }
-
-    const locationMessage = lat && lon 
-        ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${lat},${lon}` 
+    // If location data is available, construct the URL
+    const locationMessage = currentLat && currentLon
+        ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` 
         : "Location not available.";
 
     const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
@@ -209,43 +235,13 @@ function sendWhatsAppMessage(customerName, customerContact, transactionId) {
     const customerDetails = `Customer Name: ${customerName}\nContact: ${customerContact}`;
     const transactionMessage = `Transaction ID: ${transactionId}`;
     
-     const message = `${locationMessage}\n\n${cartMessage}\n\n${customerDetails}\n${transactionMessage}`;
+    const message = `${locationMessage}\n\n${cartMessage}\n\n${customerDetails}\n${transactionMessage}`;
 
     const phoneNumber = '919146028969'; // Replace with your phone number
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     // Open WhatsApp with cart and location details
     window.open(whatsappURL, '_blank');
-}
-
-// Function to get user location and check proximity
-function getLocation() {
-    const locationInfo = document.getElementById('location-info');
-    const qrCodeButton = document.getElementById('generate-qr-code-btn'); // Correct reference
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            if (checkProximity(lat, lon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
-                const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${lat},${lon}`;
-
-                locationInfo.innerHTML = `Latitude: ${lat}<br>Longitude: ${lon}`;
-                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
-                const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
-                const message = `${locationMessage}\n\n${cartMessage}`;
-
-                qrCodeButton.addEventListener('click', () => generateQRCode(message));
-            } else {
-                alert('Sorry, you are outside our delivery range.');
-                locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${lat}, Longitude: ${lon})`;
-            }
-        });
-    } else {
-        locationInfo.innerHTML = "Geolocation is not supported by this browser.";
-    }
 }
 
 /*
