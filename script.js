@@ -222,9 +222,9 @@ function getLocation() {
 
 // Function to send WhatsApp message with cart details
 function sendWhatsAppMessage(customerName, customerContact, transactionId) {
-    // If location data is available, construct the URL
+    // If location data is available, construct the URL correctly with a comma between lat and lon
     const locationMessage = currentLat && currentLon
-        ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` 
+        ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` // Ensure proper formatting
         : "Location not available.";
 
     const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
