@@ -55,7 +55,8 @@ function openTab(evt, tabName) {
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-    // enableAddToCartButtons(false);
+    // Disable the "Share My Location" button by default
+    // document.getElementById('share-location-btn').disabled = true;
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -73,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
             getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
-
     // Add animation to cart icon on "Add to Cart" button click
     document.querySelectorAll('.product-item button').forEach(button => {
         button.addEventListener('click', () => {
@@ -87,8 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 cartIcon.classList.remove('animate');
             }, 500); // Match the duration of the animation
         });
-    });
+    });        
 });
+
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
@@ -98,11 +99,11 @@ function populateTab(tabId, products) {
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p>Price: ₹${product.price}</p>
+            <p>Price: ?${product.price}</p>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
             <div class="cart-icon">
-	        🛒
-            </div>
+                🛒
+            </div>            
         </div>
     `).join('');
 }
@@ -130,7 +131,7 @@ function updateCart() {
         cartItem.classList.add('cart-item');
         cartItem.innerHTML = `
             <div class="cart-item-content">
-                <p>${item.name} - ₹${item.price}</p>
+                <p>${item.name} - ?${item.price}</p>
                 <button onclick="removeFromCart(${index})" class="remove-button">X</button>
             </div>
         `;
@@ -142,8 +143,8 @@ function updateCart() {
     }
 
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
-    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
+    document.getElementById('cart-total').innerText = `Total: ?${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ?${cartTotal + 150}`;
 }
 
 // Remove item from Cart
@@ -219,7 +220,7 @@ function getLocation() {
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
                 
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
-                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+                const cartItems = cart.map(item => `${item.name} (?${item.price})`).join(', ');
                 const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
                 const message = `${locationMessage}\n\n${cartMessage}`;
                 
@@ -241,7 +242,7 @@ function sendWhatsAppMessage(customerName, customerContact, transactionId) {
         ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` // Ensure proper formatting
         : "Location not available.";
 
-    const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+    const cartItems = cart.map(item => `${item.name} (?${item.price})`).join(', ');
     const cartMessage = cart.length > 0 
         ? `I have ordered the following items: ${cartItems}` 
         : "No items in the cart.";
