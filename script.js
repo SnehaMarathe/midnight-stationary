@@ -238,17 +238,5 @@ function getLocation() {
 
 // Function to generate QR Code
 function generateQRCode() {
-    const qrCodeContainer = document.getElementById('qr-code-container');
-    const qrCodeButton = document.getElementById('generate-qr-code-btn');
-    const qrCodeMessage = `Payment ID: ${qrCodeButton.dataset.transactionId}`; // Use the transaction ID for QR code message
 
-    if (qrCodeContainer) {
-        // Clear previous QR code
-        qrCodeContainer.innerHTML = '';
-
-        // Generate new QR code
-        QRCode.toCanvas(qrCodeContainer, qrCodeMessage, error => {
-            if (error) console.error(error);
-        });
-    }
 }
