@@ -57,7 +57,6 @@ function openTab(evt, tabName) {
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
     // document.getElementById('share-location-btn').disabled = true;
-    enableAddToCartButtons(false);
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -80,14 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
-
-    // Populate product items with disabled buttons by default
+    
+    // Ensure each product has its respective content
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
         </div>
     `).join('');
 }
@@ -202,9 +201,6 @@ function getLocation() {
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
-
-                // Enable Add to Cart buttons when within delivery range
-                enableAddToCartButtons(true);
                 
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
                 const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
@@ -215,29 +211,10 @@ function getLocation() {
             } else {
                 alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
-
-                // Disable Add to Cart buttons when out of delivery range
-                enableAddToCartButtons(false)                
-            
             }
         });
     } else {
         locationInfo.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-// Function to enable or disable all "Add to Cart" buttons
-function enableAddToCartButtons(enable) {
-    // Ensure that product buttons exist before proceeding
-    const addToCartButtons = document.querySelectorAll('.product-item button');
-    
-    if (addToCartButtons.length > 0) {
-        addToCartButtons.forEach(button => {
-            button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#cccccc'; // Change color if disabled
-        });
-    } else {
-        console.error('Add to Cart buttons not found!');
     }
 }
 
