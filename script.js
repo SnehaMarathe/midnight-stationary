@@ -26,7 +26,7 @@ function checkProximity(lat, lon, targetLocations) {
 
 // Target locations
 const targetLocations = [
-    // { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
+    { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
     { lat: 17.676095, lon: 73.986140 }, // Location 2 - Satara
     // Add more locations as needed
 ];
