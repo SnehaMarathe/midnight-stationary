@@ -75,6 +75,22 @@ document.addEventListener('DOMContentLoaded', function() {
             getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
+
+        // Add animation to cart icon on "Add to Cart" button click
+    document.querySelectorAll('.product-item button').forEach(button => {
+        button.addEventListener('click', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            
+            // Add animation class
+            cartIcon.classList.add('animate');
+            
+            // Remove animation class after animation ends
+            setTimeout(() => {
+                cartIcon.classList.remove('animate');
+            }, 500); // Match the duration of the animation
+        });
+    });
+    
 });
 
 // Function to populate product tabs
