@@ -105,10 +105,6 @@ function populateTab(tabId, products) {
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
             <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
-            <div class="cart-icon">
-                <!-- Your cart icon here, e.g., an SVG or image -->
-                🛒
-            </div>
         </div>
     `).join('');
 }
