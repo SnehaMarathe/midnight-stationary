@@ -1,6 +1,5 @@
 // Cart Array initialization
 let cart = [];
-
 // Haversine Formula to calculate distance between two lat/long points in kilometers
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
@@ -27,6 +26,7 @@ function checkProximity(lat, lon, targetLocations) {
 
 // Target locations
 const targetLocations = [
+    { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
     { lat: 17.676095, lon: 73.986140 }, // Location 2 - Satara
     // Add more locations as needed
 ];
@@ -55,7 +55,8 @@ function openTab(evt, tabName) {
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-    enableAddToCartButtons(false);
+    // Disable the "Share My Location" button by default
+    // document.getElementById('share-location-btn').disabled = true;
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -73,28 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
             getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
-
-    // Add animation to cart icon on "Add to Cart" button click
-    document.querySelectorAll('.product-item button').forEach(button => {
-        button.addEventListener('click', () => {
-            const cartIcon = document.querySelector('.cart-icon');
-            
-            // Add animation class
-            cartIcon.classList.add('animate');
-            
-            // Remove animation class after animation ends
-            setTimeout(() => {
-                cartIcon.classList.remove('animate');
-            }, 500); // Match the duration of the animation
-        });
-    });
 });
 
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
-
-    // Populate product items with disabled buttons by default
+    
+    // Ensure each product has its respective content
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
@@ -102,7 +88,7 @@ function populateTab(tabId, products) {
             <p>Price: ₹${product.price}</p>
             <button class="add-to-cart-btn" onclick="addToCart(${product.id})" disabled>Add to Cart</button>
             <div class="cart-icon">
-                🛒
+	        🛒
             </div>
         </div>
     `).join('');
@@ -217,26 +203,87 @@ function getLocation() {
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
-                qrCodeButton.disabled = false;
-                locationInfo.textContent = `Location: Lat ${currentLat}, Lon ${currentLon}`;
+                locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
+                
+                const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
+                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+                const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
+                const message = `${locationMessage}\n\n${cartMessage}`;
+                
+                qrCodeButton.addEventListener('click', () => generateQRCode(message));
             } else {
-                alert('SORRY YOU ARE OUT OF OUR DELIVERY RANGE');
-                qrCodeButton.disabled = true;
-                locationInfo.textContent = 'You are outside the delivery range.';
+                alert('Sorry, you are outside our delivery range.');
+                locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
             }
-        }, () => {
-            alert('Unable to retrieve your location.');
-            qrCodeButton.disabled = true;
-            locationInfo.textContent = 'Location access denied.';
         });
     } else {
-        alert('Geolocation is not supported by this browser.');
-        qrCodeButton.disabled = true;
-        locationInfo.textContent = 'Geolocation not supported.';
+        locationInfo.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
-// Function to generate QR Code
-function generateQRCode() {
+// Function to send WhatsApp message with cart details
+function sendWhatsAppMessage(customerName, customerContact, transactionId) {
+    // If location data is available, construct the URL correctly with a comma between lat and lon
+    const locationMessage = currentLat && currentLon
+        ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` // Ensure proper formatting
+        : "Location not available.";
 
+    const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+    const cartMessage = cart.length > 0 
+        ? `I have ordered the following items: ${cartItems}` 
+        : "No items in the cart.";
+    
+    const customerDetails = `Customer Name: ${customerName}\nContact: ${customerContact}`;
+    const transactionMessage = `Transaction ID: ${transactionId}`;
+    
+    const message = `${locationMessage}\n\n${cartMessage}\n\n${customerDetails}\n${transactionMessage}`;
+
+    const phoneNumber = '919146028969'; // Replace with your phone number
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // Open WhatsApp with cart and location details
+    window.open(whatsappURL, '_blank');
+}
+
+/*
+// Fetch the visitor counter value from the raw GitHub URL
+async function fetchVisitorCounter() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
+        if (response.ok) {
+            const text = await response.text();
+            document.getElementById('visitor-counter').textContent = text.trim();
+        } else {
+            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
+        }
+    } catch (error) {
+        console.error('Error fetching visitor counter:', error);
+        document.getElementById('visitor-counter').textContent = "Error";
+    }
+}
+
+// Call the function to update the visitor counter
+fetchVisitorCounter();
+*/
+// Fetch the visitor counter value from the raw GitHub URL
+async function fetchVisitorCounter() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
+        if (response.ok) {
+            const text = await response.text();
+            document.getElementById('visitor-counter').textContent = text.trim();
+        } else {
+            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
+        }
+    } catch (error) {
+        console.error('Error fetching visitor counter:', error);
+        document.getElementById('visitor-counter').textContent = "Error";
+    }
+}
+
+// Call the function to update the visitor counter
+fetchVisitorCounter();
+// QR Code Generation (Your implementation should be included here)
+function generateQRCode(message) {
+    // Your QR code logic should go here
 }
