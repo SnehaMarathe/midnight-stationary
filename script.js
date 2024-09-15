@@ -55,7 +55,7 @@ function openTab(evt, tabName) {
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-    enableAddToCartButtons(false);
+    // enableAddToCartButtons(false);
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -99,7 +99,7 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id})" disabled>Add to Cart</button>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
             <div class="cart-icon">
 	        🛒
             </div>
