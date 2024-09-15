@@ -203,6 +203,9 @@ function getLocation() {
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
+
+                // Enable Add to Cart buttons when within delivery range
+                enableAddToCartButtons(true);
                 
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
                 const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
@@ -213,11 +216,24 @@ function getLocation() {
             } else {
                 alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
+
+                // Disable Add to Cart buttons when out of delivery range
+                enableAddToCartButtons(false)                
+            
             }
         });
     } else {
         locationInfo.innerHTML = "Geolocation is not supported by this browser.";
     }
+}
+
+// Function to enable or disable all "Add to Cart" buttons
+function enableAddToCartButtons(enable) {
+    const addToCartButtons = document.querySelectorAll('.product-item button');
+    addToCartButtons.forEach(button => {
+        button.disabled = !enable; // Disable if out of range
+        button.style.backgroundColor = enable ? '#00796b' : '#cccccc'; // Change color if disabled
+    });
 }
 
 // Function to send WhatsApp message with cart details
