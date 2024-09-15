@@ -173,6 +173,24 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
+/* Add this CSS to your stylesheet */
+/* Animation for cart icon */
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(2.1); }
+    100% { transform: scale(1); }
+}
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon.animate {
+    animation: bounce 0.5s ease;
+}
+
 #cart-total, #total-with-fee {
     font-size: 1.4em;
     font-weight: bold;
@@ -262,22 +280,6 @@ footer p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Add this CSS to your stylesheet */
-/* Animation for cart icon */
-@keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(2.1); }
-    100% { transform: scale(1); }
-}
 
-.cart-icon {
-    position: relative;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.cart-icon.animate {
-    animation: bounce 0.5s ease;
-}
 
 
