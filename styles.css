@@ -20,7 +20,7 @@ header {
     background: linear-gradient(135deg, #004d40, #00796b);
     color: #fff;
     text-align: center;
-    /* padding: 1em; */
+    padding: 2em 1em;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #004d40;
 }
