@@ -57,6 +57,7 @@ function openTab(evt, tabName) {
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
     // document.getElementById('share-location-btn').disabled = true;
+    enableAddToCartButtons(false);
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -229,11 +230,17 @@ function getLocation() {
 
 // Function to enable or disable all "Add to Cart" buttons
 function enableAddToCartButtons(enable) {
+    // Ensure that product buttons exist before proceeding
     const addToCartButtons = document.querySelectorAll('.product-item button');
-    addToCartButtons.forEach(button => {
-        button.disabled = !enable; // Disable if out of range
-        button.style.backgroundColor = enable ? '#00796b' : '#cccccc'; // Change color if disabled
-    });
+    
+    if (addToCartButtons.length > 0) {
+        addToCartButtons.forEach(button => {
+            button.disabled = !enable; // Disable if out of range
+            button.style.backgroundColor = enable ? '#00796b' : '#cccccc'; // Change color if disabled
+        });
+    } else {
+        console.error('Add to Cart buttons not found!');
+    }
 }
 
 // Function to send WhatsApp message with cart details
