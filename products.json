@@ -47,7 +47,14 @@
             "name": "BothSide Ruled Paper",
             "price": 50,
             "image": "images/paper-bothside-ruled.jpg"
-        }         
+        },
+        {
+            "id": 9,
+            "name": "Single Grip Binder File",
+            "price": 30,
+            "image": "images/single-grip-binderfile.jpg"
+        }
+        
     ],
     "glues": [
         {
