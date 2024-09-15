@@ -87,7 +87,9 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
+            //<button onclick="addToCart(${product.id})">Add to Cart</button>
+            <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
+        </div>
         </div>
     `).join('');
 }
