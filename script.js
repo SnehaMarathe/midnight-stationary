@@ -142,7 +142,6 @@ function initiateRazorpayPayment() {
 
     // Collect customer details
     var customerName = document.getElementById('customer-name').value;
-    var customerEmail = document.getElementById('customer-email').value;
     var customerContact = document.getElementById('customer-contact').value;
 
     // Validate form inputs
