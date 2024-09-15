@@ -26,7 +26,7 @@ function checkProximity(lat, lon, targetLocations) {
 
 // Target locations
 const targetLocations = [
-    { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
+    // { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
     { lat: 17.676095, lon: 73.986140 }, // Location 2 - Satara
     // Add more locations as needed
 ];
@@ -75,23 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
             getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
-
-    /*
-        // Add animation to cart icon on "Add to Cart" button click
-    document.querySelectorAll('.product-item button').forEach(button => {
-        button.addEventListener('click', () => {
-            const cartIcon = document.querySelector('.cart-icon');
-            
-            // Add animation class
-            cartIcon.classList.add('animate');
-            
-            // Remove animation class after animation ends
-            setTimeout(() => {
-                cartIcon.classList.remove('animate');
-            }, 500); // Match the duration of the animation
-        });
-    });
-  */  
 });
 
 // Function to populate product tabs
