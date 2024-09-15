@@ -80,14 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
-    
-    // Ensure each product has its respective content
+
+    // Populate product items with disabled buttons by default
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            //<button onclick="addToCart(${product.id})">Add to Cart</button>
             <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
         </div>
     `).join('');
