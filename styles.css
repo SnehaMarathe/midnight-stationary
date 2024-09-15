@@ -241,4 +241,23 @@ footer p {
 /* Location Sharing */
 #location-info {
     margin-top: 15px;
+} 
+
+/* Center the button on the screen */
+#generate-qr-code-btn {
+    display: block;
+    margin: 0 auto; /* Centers the button horizontally */
+    background: #00bfae;
+    border: none;
+    color: #1a1a1a;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+#generate-qr-code-btn:hover {
+    background: #00a79d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
