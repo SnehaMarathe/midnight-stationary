@@ -35,7 +35,19 @@
             "name": "Graph Paper Book",
             "price": 68,
             "image": "images/graph-book.jpg"
-        }        
+        },
+        {
+            "id": 7,
+            "name": "OneSide Ruled Paper",
+            "price": 50,
+            "image": "images/paper-oneside-ruled.jpg"
+        },
+        {
+            "id": 8,
+            "name": "BothSide Ruled Paper",
+            "price": 50,
+            "image": "images/paper-bothside-ruled.jpg"
+        }         
     ],
     "glues": [
         {
