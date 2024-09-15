@@ -90,7 +90,6 @@ function populateTab(tabId, products) {
             //<button onclick="addToCart(${product.id})">Add to Cart</button>
             <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
         </div>
-        </div>
     `).join('');
 }
 
