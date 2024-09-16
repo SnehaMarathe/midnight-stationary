@@ -142,11 +142,11 @@ function initiateRazorpayPayment() {
 
     // Collect customer details
     var customerName = document.getElementById('customer-name').value;
-    var customerEmail = document.getElementById('customer-email').value;
+    // var customerEmail = document.getElementById('customer-email').value;
     var customerContact = document.getElementById('customer-contact').value;
 
     // Validate form inputs
-    if (!customerName || !customerEmail || !customerContact) {
+    if (!customerName || !customerContact) {
         alert('Please fill out all customer details.');
         return;
     }
@@ -175,7 +175,6 @@ function initiateRazorpayPayment() {
         },
         "prefill": {
             "name": customerName, // Prefill customer name from the form
-            "email": customerEmail, // Prefill customer email from the form
             "contact": customerContact // Prefill customer contact from the form
         },
         "theme": {
@@ -300,7 +299,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#00796b' : '#4f4f4f'; // Change color if disabled
             
             // Rebind the click event if enabling the button
             if (enable) {
