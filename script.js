@@ -240,7 +240,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#79000E' : '#fffccc'; // Change color if disabled
         });
     } else {
         console.error('Add to Cart buttons not found!');
