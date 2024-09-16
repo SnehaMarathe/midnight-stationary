@@ -99,7 +99,7 @@ function addToCart(productId) {
             cart.push(product);
             updateCart();
         })
-        .catch(error => console.error('Error fetching product data:', error));
+        // .catch(error => console.error('Error fetching product data:', error));
 }
 
 // Update Cart Display
