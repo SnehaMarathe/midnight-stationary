@@ -203,20 +203,16 @@ function getLocation() {
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
-                // Ensure buttons are rendered before enabling them
-                enableAddToCartButtons(true); 
-                /*
+                
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
                 const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
                 const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
                 const message = `${locationMessage}\n\n${cartMessage}`;
                 
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
-                */
             } else {
                 alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
-                enableAddToCartButtons(false); 
             }
         });
     } else {
