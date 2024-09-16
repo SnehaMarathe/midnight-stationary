@@ -99,9 +99,15 @@ function addToCart(productId) {
         .then(response => response.json())
         .then(data => {
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
-            const product = allProducts.find(prod => prod.id === productId);
-            cart.push(product);
-            updateCart();
+            const product = allProducts.find(prod => prod.id == productId); // Use == to handle type coercion
+
+            if (product) {
+                cart.push(product); // Only push the product if it exists
+                updateCart();
+            } else {
+                console.error(`Product with ID ${productId} not found.`);
+                alert(`Error: Product with ID ${productId} not found.`);
+            }
         })
         .catch(error => console.error('Error fetching product data:', error));
 }
@@ -203,7 +209,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v3');
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v4');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
