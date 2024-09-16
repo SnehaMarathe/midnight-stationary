@@ -55,10 +55,6 @@ function openTab(evt, tabName) {
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-    // Disable the "Share My Location" button by default
-    // document.getElementById('share-location-btn').disabled = true;
-    // enableAddToCartButtons(false);
-
     // Fetch Product Data and Display Products
     fetch('products.json')
         .then(response => response.json())
@@ -71,11 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Open the first tab by default
             document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
-            // Ensure buttons are rendered before enabling them
-            // enableAddToCartButtons(true); 
-
             // Check location and update UI accordingly
-            getLocation();
+            getLocation(); // Location check will enable buttons if within range
         })
         .catch(error => console.error('Error loading the product data:', error));
 });
@@ -90,10 +83,8 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart(${product.id})" disabled>Add to Cart</button>
-            <div class="cart-icon">
-            🛒
-            </div> 
+            <button data-product-id="${product.id}" disabled>Add to Cart</button>
+            <div class="cart-icon">🛒</div>
         </div>
     `).join('');
 }
@@ -232,7 +223,7 @@ function getLocation() {
     }
 }
 
-// Function to enable or disable all "Add to Cart" buttons
+// Function to enable or disable all "Add to Cart" buttons and rebind click events
 function enableAddToCartButtons(enable) {
     // Ensure that product buttons exist before proceeding
     const addToCartButtons = document.querySelectorAll('.product-item button');
@@ -241,6 +232,14 @@ function enableAddToCartButtons(enable) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
             button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            
+            // Rebind the click event if enabling the button
+            if (enable) {
+                const productId = button.getAttribute('data-product-id');
+                button.onclick = () => addToCart(productId);
+            } else {
+                button.onclick = null; // Disable click if not enabled
+            }
         });
     } else {
         console.error('Add to Cart buttons not found!');
