@@ -231,7 +231,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#fffccc' : '#00796b'; // Change color if disabled
             
             // Rebind the click event if enabling the button
             if (enable) {
