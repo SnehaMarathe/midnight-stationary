@@ -124,18 +124,21 @@ function addToCart(productId) {
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
+            console.log('Fetched data:', data); // Debug: Check fetched data
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
-            const product = allProducts.find(prod => prod.id === productId);
+            console.log('All products:', allProducts); // Debug: Check all products
+            
+            // Ensure productId is parsed as an integer
+            const product = allProducts.find(prod => prod.id === parseInt(productId, 10));
             if (product) {
                 cart.push(product);
                 updateCart();
             } else {
-                console.error('Product not found');
+                console.error('Product not found with ID:', productId);
             }
         })
         .catch(error => console.error('Error fetching product data:', error));
 }
-
 
 // Update Cart Display
 function updateCart() {
