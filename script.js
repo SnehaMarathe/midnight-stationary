@@ -87,7 +87,7 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
+            <button data-product-id="${product.id}" onclick="addToCart(${product.id})">Add to Cart</button>
             <div class="cart-icon">🛒</div>
         </div>
     `).join('');
@@ -203,7 +203,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v3');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
@@ -315,3 +315,4 @@ function enableAddToCartButtons(enable) {
         console.error('Add to Cart buttons not found!');
     }
 }
+
