@@ -54,17 +54,22 @@ function openTab(evt, tabName) {
     evt.currentTarget.style.backgroundColor = "#004d40";
 }
 
+// DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
+    // Disable the "Share My Location" button by default
+    // document.getElementById('share-location-btn').disabled = true;
+
+    // Fetch Product Data and Display Products
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
-            // Populate product tabs once
+            // Populate product tabs
             populateTab('chart-paper', data.chartPaper);
             populateTab('glue', data.glues);
             populateTab('craft-materials', data.craftMaterials);
 
             // Open the first tab by default
-            document.querySelector(".tab-links div").click();
+            document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
             // Check location and update UI accordingly
             getLocation();
@@ -76,47 +81,27 @@ document.addEventListener('DOMContentLoaded', function() {
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
     
-    // Clear the container before populating
-    container.innerHTML = '';
-
+    // Ensure each product has its respective content
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button data-product-id="${product.id}">Add</button>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
             <div class="cart-icon">🛒</div>
         </div>
     `).join('');
-
-    // Add event listeners to buttons only after population
-    container.querySelectorAll('.product-item button').forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.getAttribute('data-product-id');
-            console.log('Button clicked, Product ID:', productId); // Debug log
-            addToCart(productId);
-        });
-    });
 }
 
 // Add to Cart Function
 function addToCart(productId) {
-    console.log('Adding product with ID:', productId);
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
-            console.log('Fetched data:', data); // Debug: Check fetched data
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
-            console.log('All products:', allProducts); // Debug: Check all products
-            
-            // Ensure productId is parsed as an integer
-            const product = allProducts.find(prod => prod.id === parseInt(productId, 10));
-            if (product) {
-                cart.push(product);
-                updateCart();
-            } else {
-                console.error('Product not found with ID:', productId);
-            }
+            const product = allProducts.find(prod => prod.id === productId);
+            cart.push(product);
+            updateCart();
         })
         .catch(error => console.error('Error fetching product data:', error));
 }
