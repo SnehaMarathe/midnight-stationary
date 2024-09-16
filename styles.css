@@ -173,6 +173,16 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
+.cart-item-content {
+    display: flex;
+    justify-content: space-between; /* Space out items so the button is pushed to the right */
+    align-items: center; /* Center items vertically */
+}
+
+.cart-item-content p {
+    margin: 0; /* Remove default margin */
+}
+
 .remove-button {
     background-color: red;
     color: white;
