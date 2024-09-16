@@ -96,34 +96,45 @@ function addToCart(productId) {
         .then(data => {
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
             const product = allProducts.find(prod => prod.id === productId);
-            cart.push(product);
-            updateCart();
+            
+            if (product) {
+                cart.push(product);
+                updateCart();
+            } else {
+                console.error('Product not found for ID:', productId); // Debugging help
+            }
         })
-        // .catch(error => console.error('Error fetching product data:', error));
+        .catch(error => console.error('Error fetching product data:', error));
 }
+
 
 // Update Cart Display
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
     cartItems.innerHTML = '';
 
+    // Ensure cart is not empty or has undefined items
     cart.forEach((item, index) => {
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `
-            <div class="cart-item-content">
-                <p>${item.name} - ₹${item.price}</p>
-                <button onclick="removeFromCart(${index})" class="remove-button">X</button>
-            </div>
-        `;
-        cartItems.appendChild(cartItem);
+        if (item && item.name) {  // Add this check to ensure item is defined and has a 'name' property
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <div class="cart-item-content">
+                    <p>${item.name} - ₹${item.price}</p>
+                    <button onclick="removeFromCart(${index})" class="remove-button">X</button>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+        } else {
+            console.error('Invalid item in cart:', item); // Debugging help to catch the issue
+        }
     });
 
-    if (cart.length === 0) {
+    if (cart.length === 0 || cartItems.innerHTML === '') {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
 
-    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    const cartTotal = cart.reduce((total, item) => item && item.price ? total + item.price : total, 0);
     document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
     document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
 }
