@@ -198,7 +198,7 @@ function getLocation() {
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
-                // locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
+                locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
 
                 // Enable Add to Cart buttons when within delivery range
                 enableAddToCartButtons(true);
@@ -211,7 +211,7 @@ function getLocation() {
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
             } else {
                 alert('Sorry, you are outside our delivery range.');
-                // locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
+                locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
 
                 // Disable Add to Cart buttons when out of delivery range
                 enableAddToCartButtons(false)                
