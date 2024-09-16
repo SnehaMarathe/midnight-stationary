@@ -43,8 +43,8 @@ header .cta {
 /* Header logo */
 .header-logo {
     display: block;
-    margin: 0 auto 15px; /* Center the logo and add space below */
-    width: 50%; /* Set width as a percentage of the parent container */
+    margin: 0 auto 1px; /* Center the logo and add space below */
+    width: 70%; /* Set width as a percentage of the parent container */
     max-width: 600px; /* Limit the maximum width */
     height: auto; /* Maintain the aspect ratio */
 }
