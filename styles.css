@@ -173,33 +173,6 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
-.remove-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-left: 10px; /* Add some space between the text and the button if needed */
-}
-
-/* Add this CSS to your stylesheet */
-/* Animation for cart icon */
-@keyframes bounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(2.1); }
-    100% { transform: scale(1); }
-}
-
-.cart-icon {
-    position: relative;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.cart-icon.animate {
-    animation: bounce 0.5s ease;
-}
-
 #cart-total, #total-with-fee {
     font-size: 1.4em;
     font-weight: bold;
