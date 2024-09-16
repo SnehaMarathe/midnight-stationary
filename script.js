@@ -20,7 +20,7 @@ function deg2rad(deg) {
 function checkProximity(lat, lon, targetLocations) {
     return targetLocations.some(({ lat: targetLat, lon: targetLon }) => {
         const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
-        return distance <= 10; // Check if distance is within 10km
+        return distance <= 20; // Check if distance is within 10km
     });
 }
 
