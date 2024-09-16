@@ -20,7 +20,7 @@ function deg2rad(deg) {
 function checkProximity(lat, lon, targetLocations) {
     return targetLocations.some(({ lat: targetLat, lon: targetLon }) => {
         const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
-        return distance <= 5; // Check if distance is within 10km
+        return distance <= 10; // Check if distance is within 10km
     });
 }
 
@@ -55,6 +55,9 @@ function openTab(evt, tabName) {
 
 // DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
+    // Disable the "Share My Location" button by default
+    // document.getElementById('share-location-btn').disabled = true;
+
     // Fetch Product Data and Display Products
     fetch('products.json')
         .then(response => response.json())
@@ -68,23 +71,39 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
             // Check location and update UI accordingly
-            getLocation(); // Location check will enable buttons if within range
+            getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
+    // Add animation to cart icon on "Add to Cart" button click
+    document.querySelectorAll('.product-item button').forEach(button => {
+        button.addEventListener('click', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            
+            // Add animation class
+            cartIcon.classList.add('animate');
+            
+            // Remove animation class after animation ends
+            setTimeout(() => {
+                cartIcon.classList.remove('animate');
+            }, 500); // Match the duration of the animation
+        });
+    });        
 });
 
 // Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
-
-    // Populate product items with disabled buttons by default
+    
+    // Ensure each product has its respective content
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p>Price: ₹${product.price}</p>
-            <button data-product-id="${product.id}" disabled>Add to Cart</button>
-            <div class="cart-icon">🛒</div>
+            <p>Price: ?${product.price}</p>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
+            <div class="cart-icon">
+                🛒
+            </div>            
         </div>
     `).join('');
 }
@@ -96,47 +115,36 @@ function addToCart(productId) {
         .then(data => {
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
             const product = allProducts.find(prod => prod.id === productId);
-            
-            if (product) {
-                cart.push(product);
-                updateCart();
-            } else {
-                console.error('Product not found for ID:', productId); // Debugging help
-            }
+            cart.push(product);
+            updateCart();
         })
         .catch(error => console.error('Error fetching product data:', error));
 }
-
 
 // Update Cart Display
 function updateCart() {
     const cartItems = document.querySelector('.cart-items');
     cartItems.innerHTML = '';
 
-    // Ensure cart is not empty or has undefined items
     cart.forEach((item, index) => {
-        if (item && item.name) {  // Add this check to ensure item is defined and has a 'name' property
-            const cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.innerHTML = `
-                <div class="cart-item-content">
-                    <p>${item.name} - ₹${item.price}</p>
-                    <button onclick="removeFromCart(${index})" class="remove-button">X</button>
-                </div>
-            `;
-            cartItems.appendChild(cartItem);
-        } else {
-            console.error('Invalid item in cart:', item); // Debugging help to catch the issue
-        }
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+            <div class="cart-item-content">
+                <p>${item.name} - ?${item.price}</p>
+                <button onclick="removeFromCart(${index})" class="remove-button">X</button>
+            </div>
+        `;
+        cartItems.appendChild(cartItem);
     });
 
-    if (cart.length === 0 || cartItems.innerHTML === '') {
+    if (cart.length === 0) {
         cartItems.innerHTML = '<p>No items in cart.</p>';
     }
 
-    const cartTotal = cart.reduce((total, item) => item && item.price ? total + item.price : total, 0);
-    document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
+    const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+    document.getElementById('cart-total').innerText = `Total: ?${cartTotal}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ?${cartTotal + 150}`;
 }
 
 // Remove item from Cart
@@ -210,12 +218,9 @@ function getLocation() {
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
-
-                // Enable Add to Cart buttons when within delivery range
-                enableAddToCartButtons(true);
                 
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
-                const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+                const cartItems = cart.map(item => `${item.name} (?${item.price})`).join(', ');
                 const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
                 const message = `${locationMessage}\n\n${cartMessage}`;
                 
@@ -223,37 +228,10 @@ function getLocation() {
             } else {
                 alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
-
-                // Disable Add to Cart buttons when out of delivery range
-                enableAddToCartButtons(false)                
-            
             }
         });
     } else {
         locationInfo.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-// Function to enable or disable all "Add to Cart" buttons and rebind click events
-function enableAddToCartButtons(enable) {
-    // Ensure that product buttons exist before proceeding
-    const addToCartButtons = document.querySelectorAll('.product-item button');
-    
-    if (addToCartButtons.length > 0) {
-        addToCartButtons.forEach(button => {
-            button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#fffccc' : '#00796b'; // Change color if disabled
-            
-            // Rebind the click event if enabling the button
-            if (enable) {
-                const productId = button.getAttribute('data-product-id');
-                button.onclick = () => addToCart(productId);
-            } else {
-                button.onclick = null; // Disable click if not enabled
-            }
-        });
-    } else {
-        console.error('Add to Cart buttons not found!');
     }
 }
 
@@ -264,7 +242,7 @@ function sendWhatsAppMessage(customerName, customerContact, transactionId) {
         ? `Hey! I am sending my location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}` // Ensure proper formatting
         : "Location not available.";
 
-    const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
+    const cartItems = cart.map(item => `${item.name} (?${item.price})`).join(', ');
     const cartMessage = cart.length > 0 
         ? `I have ordered the following items: ${cartItems}` 
         : "No items in the cart.";
@@ -323,3 +301,4 @@ fetchVisitorCounter();
 function generateQRCode(message) {
     // Your QR code logic should go here
 }
+
