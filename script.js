@@ -286,3 +286,26 @@ fetchVisitorCounter();
 function generateQRCode(message) {
     // Your QR code logic should go here
 }
+
+// Function to enable or disable all "Add to Cart" buttons and rebind click events
+function enableAddToCartButtons(enable) {
+    // Ensure that product buttons exist before proceeding
+    const addToCartButtons = document.querySelectorAll('.product-item button');
+    
+    if (addToCartButtons.length > 0) {
+        addToCartButtons.forEach(button => {
+            button.disabled = !enable; // Disable if out of range
+            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            
+            // Rebind the click event if enabling the button
+            if (enable) {
+                const productId = button.getAttribute('data-product-id');
+                button.onclick = () => addToCart(productId);
+            } else {
+                button.onclick = null; // Disable click if not enabled
+            }
+        });
+    } else {
+        console.error('Add to Cart buttons not found!');
+    }
+}
