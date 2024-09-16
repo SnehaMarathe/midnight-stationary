@@ -1,4 +1,3 @@
-
 // Cart Array initialization
 let cart = [];
 // Haversine Formula to calculate distance between two lat/long points in kilometers
@@ -88,7 +87,6 @@ function populateTab(tabId, products) {
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
-            <div class="cart-icon">🛒</div>
         </div>
     `).join('');
 }
@@ -301,7 +299,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#4f4f4f'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
             
             // Rebind the click event if enabling the button
             if (enable) {
