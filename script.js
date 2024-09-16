@@ -103,12 +103,23 @@ function addToCart(productId) {
             if (product) {
                 cart.push(product); // Only push the product if it exists
                 updateCart();
+                animateCartIcon(productId); // Trigger cart icon animation
             } else {
                 console.error(`Product with ID ${productId} not found.`);
                 alert(`Error: Product with ID ${productId} not found.`);
             }
         })
         .catch(error => console.error('Error fetching product data:', error));
+}
+
+// Function to trigger cart icon animation
+function animateCartIcon(productId) {
+    const cartIcon = document.querySelector(`[data-product-id="${productId}"]`).nextElementSibling;
+    if (cartIcon) {
+        cartIcon.classList.add('animated');
+        // Remove the animation class after the animation ends so it can be re-triggered
+        setTimeout(() => cartIcon.classList.remove('animated'), 600); // Same duration as the animation
+    }
 }
 
 // Update Cart Display
