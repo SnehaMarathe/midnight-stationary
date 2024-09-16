@@ -173,23 +173,36 @@ h3 {
     border-bottom: 1px solid #ccc;
 }
 
-.cart-item-content {
+.cart-item {
     display: flex;
-    justify-content: space-between; /* Space out items so the button is pushed to the right */
-    align-items: center; /* Center items vertically */
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
-.cart-item-content p {
-    margin: 0; /* Remove default margin */
+.cart-item-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }
 
 .remove-button {
     background-color: red;
     color: white;
     border: none;
-    padding: 5px 10px;
+    border-radius: 50%;
+    width: 30px; /* Adjust width */
+    height: 30px; /* Adjust height */
+    font-size: 18px; /* Adjust font size */
     cursor: pointer;
-    margin-left: 10px; /* Add some space between the text and the button if needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+    padding: 0; /* Remove default padding */
 }
 
 #cart-total, #total-with-fee {
