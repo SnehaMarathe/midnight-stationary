@@ -40,6 +40,14 @@ header .cta {
     line-height: 1.6;
 }
 
+/* Header logo */
+.header-logo {
+    display: block;
+    margin: 0 auto 15px; /* Center the logo and add some space below */
+    width: 120px; /* Adjust width as necessary */
+    height: auto; /* Maintain aspect ratio */
+}
+
 /* Main Container */
 .container {
     max-width: 1000px;
