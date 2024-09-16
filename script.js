@@ -178,17 +178,23 @@ function initiateRazorpayPayment() {
     const totalWithFee = cartTotal + 150; // Add convenience fee
 
     const options = {
-        "key": "rzp_live_qFVcFW1dSmAW0M", // Replace with your Razorpay API key
+        "key": "rzp_test_2wFKfqydF2XePp", // "rzp_live_qFVcFW1dSmAW0M", // Replace with your Razorpay API key
         "amount": totalWithFee * 100, // Razorpay accepts amount in paise (INR * 100)
         "currency": "INR",
         "name": "Latenight Stationery",
         "description": "Stationery Order Payment",
         "image": "https://your-logo-url.com/logo.png", // Optional logo
         "handler": function(response) {
+            
             // Handle the success callback
             alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            
             // Call sendWhatsAppMessage with the transaction ID
             sendWhatsAppMessage(customerName, customerContact, response.razorpay_payment_id); 
+            
+            // Clear the cart after successful payment
+            cart = [];
+            updateCart();  // Update the cart display to reflect the cleared cart
         },
         "prefill": {
             "name": customerName, // Prefill customer name from the form
@@ -219,7 +225,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v8');
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v9');
                 locationInfo.innerHTML = `Location: In Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
