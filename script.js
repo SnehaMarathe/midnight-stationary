@@ -104,7 +104,7 @@ function populateTab(tabId, products) {
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
             <button data-product-id="${product.id}">Add</button>
-            <div class="cart-icon">🛒</div>
+            
         </div>
     `).join('');
     
