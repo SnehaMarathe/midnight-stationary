@@ -54,69 +54,50 @@ function openTab(evt, tabName) {
     evt.currentTarget.style.backgroundColor = "#004d40";
 }
 
-// DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
-    // Disable the "Share My Location" button by default
-    // document.getElementById('share-location-btn').disabled = true;
-
-    // Fetch Product Data and Display Products
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
-            // Populate product tabs
+            // Populate product tabs once
             populateTab('chart-paper', data.chartPaper);
             populateTab('glue', data.glues);
             populateTab('craft-materials', data.craftMaterials);
 
             // Open the first tab by default
-            document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
+            document.querySelector(".tab-links div").click();
 
             // Check location and update UI accordingly
             getLocation();
         })
         .catch(error => console.error('Error loading the product data:', error));
-    /*
-    // Add animation to cart icon on "Add to Cart" button click
-    document.querySelectorAll('.product-item button').forEach(button => {
-        button.addEventListener('click', () => {
-            const cartIcon = document.querySelector('.cart-icon');
-            
-            // Add animation class
-            cartIcon.classList.add('animate');
-            
-            // Remove animation class after animation ends
-            setTimeout(() => {
-                cartIcon.classList.remove('animate');
-            }, 500); // Match the duration of the animation
-        });
-    });   
-    */
 });
 
-// Updated populate Tab Function
+// Function to populate product tabs
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
     
-    // Ensure each product has its respective content
+    // Clear the container before populating
+    container.innerHTML = '';
+
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
             <button data-product-id="${product.id}">Add</button>
-            
+            <div class="cart-icon">🛒</div>
         </div>
     `).join('');
-    
-    // Add event listeners after populating
-    document.querySelectorAll(`#${tabId} .product-item button`).forEach(button => {
+
+    // Add event listeners to buttons only after population
+    container.querySelectorAll('.product-item button').forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.getAttribute('data-product-id');
+            console.log('Button clicked, Product ID:', productId); // Debug log
             addToCart(productId);
         });
     });
 }
-
 
 // Add to Cart Function
 function addToCart(productId) {
