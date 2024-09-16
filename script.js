@@ -57,7 +57,7 @@ function openTab(evt, tabName) {
 document.addEventListener('DOMContentLoaded', function() {
     // Disable the "Share My Location" button by default
     // document.getElementById('share-location-btn').disabled = true;
-    enableAddToCartButtons(false);
+    // enableAddToCartButtons(false);
 
     // Fetch Product Data and Display Products
     fetch('products.json')
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
             // Ensure buttons are rendered before enabling them
-            enableAddToCartButtons(true); 
+            // enableAddToCartButtons(true); 
 
             // Check location and update UI accordingly
             getLocation();
