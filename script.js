@@ -148,11 +148,11 @@ function initiateRazorpayPayment() {
 
     // Collect customer details
     var customerName = document.getElementById('customer-name').value;
-    var customerEmail = document.getElementById('customer-email').value;
+    // var customerEmail = document.getElementById('customer-email').value;
     var customerContact = document.getElementById('customer-contact').value;
 
     // Validate form inputs
-    if (!customerName || !customerEmail || !customerContact) {
+    if (!customerName /*|| !customerEmail*/|| !customerContact) {
         alert('Please fill out all customer details.');
         return;
     }
@@ -181,7 +181,7 @@ function initiateRazorpayPayment() {
         },
         "prefill": {
             "name": customerName, // Prefill customer name from the form
-            "email": customerEmail, // Prefill customer email from the form
+            // "email": customerEmail, // Prefill customer email from the form
             "contact": customerContact // Prefill customer contact from the form
         },
         "theme": {
