@@ -1,3 +1,4 @@
+
 // Cart Array initialization
 let cart = [];
 // Haversine Formula to calculate distance between two lat/long points in kilometers
@@ -87,6 +88,7 @@ function populateTab(tabId, products) {
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
+            <div class="cart-icon">🛒</div>
         </div>
     `).join('');
 }
@@ -203,16 +205,20 @@ function getLocation() {
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
-                
+                // Ensure buttons are rendered before enabling them
+                enableAddToCartButtons(true); 
+                /*
                 const locationMessage = `Hey! I am sending location for delivery: https://www.google.com/maps?q=${currentLat},${currentLon}`;
                 const cartItems = cart.map(item => `${item.name} (₹${item.price})`).join(', ');
                 const cartMessage = cart.length > 0 ? `I have ordered the following items: ${cartItems}` : "No items in the cart.";
                 const message = `${locationMessage}\n\n${cartMessage}`;
                 
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
+                */
             } else {
                 alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
+                enableAddToCartButtons(false); 
             }
         });
     } else {
@@ -295,7 +301,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#00796b' : '#4f4f4f'; // Change color if disabled
             
             // Rebind the click event if enabling the button
             if (enable) {
