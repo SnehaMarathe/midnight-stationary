@@ -44,7 +44,7 @@ header .cta {
 .header-logo {
     display: block;
     margin: 0 auto 15px; /* Center the logo and add some space below */
-    width: 120px; /* Adjust width as necessary */
+    width: auto; /* Adjust width as necessary  120px*/
     height: auto; /* Maintain aspect ratio */
 }
 
