@@ -205,6 +205,28 @@ h3 {
     padding: 0; /* Remove default padding */
 }
 
+/* Add an animation for the cart icon */
+@keyframes cart-bounce {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply the animation class */
+.cart-icon.animated {
+    animation: cart-bounce 0.6s ease;
+}
+/*Add an animation for the cart icon */
+
 #cart-total, #total-with-fee {
     font-size: 1.4em;
     font-weight: bold;
