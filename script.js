@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });    
 });
 
-// Function to populate product tabs
+// Updated populate Tab Function
 function populateTab(tabId, products) {
     const container = document.getElementById(tabId);
     
@@ -102,24 +102,39 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart(${product.id})">Add</button>
+            <button data-product-id="${product.id}">Add</button>
             <div class="cart-icon">🛒</div>
         </div>
     `).join('');
+    
+    // Add event listeners after populating
+    document.querySelectorAll(`#${tabId} .product-item button`).forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-product-id');
+            addToCart(productId);
+        });
+    });
 }
+
 
 // Add to Cart Function
 function addToCart(productId) {
+    console.log('Adding product with ID:', productId);
     fetch('products.json')
         .then(response => response.json())
         .then(data => {
             const allProducts = [...data.chartPaper, ...data.glues, ...data.craftMaterials];
             const product = allProducts.find(prod => prod.id === productId);
-            cart.push(product);
-            updateCart();
+            if (product) {
+                cart.push(product);
+                updateCart();
+            } else {
+                console.error('Product not found');
+            }
         })
         .catch(error => console.error('Error fetching product data:', error));
 }
+
 
 // Update Cart Display
 function updateCart() {
