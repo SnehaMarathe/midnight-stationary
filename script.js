@@ -26,8 +26,8 @@ function checkProximity(lat, lon, targetLocations) {
 
 // Target locations
 const targetLocations = [
-    { lat: 18.489754, lon: 73.866688 }, // Location 1 - Head Office
-    { lat: 17.676095, lon: 73.986140 } // Location 2 - Satara
+    { lat: 18.489754, lon: 73.866688 } // Location 1 - Head Office
+    // { lat: 17.676095, lon: 73.986140 }, // Location 2 - Satara
     // Add more locations as needed
 ];
 
@@ -86,7 +86,7 @@ function populateTab(tabId, products) {
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>Price: ₹${product.price}</p>
-            <button data-product-id="${product.id}" onclick="addToCart(${product.id})">Add to Cart</button>
+            <button data-product-id="${product.id}" onclick="addToCart(${product.id})">Add</button>
             <div class="cart-icon">🛒</div>
         </div>
     `).join('');
@@ -208,8 +208,8 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v6');
-                locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v7');
+                locationInfo.innerHTML = `Location: In Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
                 /*
