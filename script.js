@@ -1,4 +1,3 @@
-
 // Cart Array initialization
 let cart = [];
 // Haversine Formula to calculate distance between two lat/long points in kilometers
@@ -209,7 +208,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v5');
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE v6');
                 locationInfo.innerHTML = `Latitude: ${currentLat}<br>Longitude: ${currentLon}`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
