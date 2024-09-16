@@ -71,6 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Open the first tab by default
             document.querySelector(".tab-links div").click(); // Ensures the first tab opens by default
 
+            // Ensure buttons are rendered before enabling them
+            enableAddToCartButtons(true); 
+
             // Check location and update UI accordingly
             getLocation();
         })
@@ -237,7 +240,7 @@ function enableAddToCartButtons(enable) {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.disabled = !enable; // Disable if out of range
-            button.style.backgroundColor = enable ? '#00796b' : '#cccccc'; // Change color if disabled
+            button.style.backgroundColor = enable ? '#00796b' : '#fffccc'; // Change color if disabled
         });
     } else {
         console.error('Add to Cart buttons not found!');
