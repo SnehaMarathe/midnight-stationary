@@ -20,7 +20,7 @@ header {
     background: linear-gradient(135deg, #004d40, #00796b);
     color: #fff;
     text-align: center;
-    padding: 2em 1em;
+    /* padding: 2em 1em; */
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #004d40;
 }
@@ -44,7 +44,7 @@ header .cta {
 .header-logo {
     display: block;
     margin: 0 auto 1px; /* Center the logo and add space below */
-    width: 70%; /* Set width as a percentage of the parent container */
+    width: 80%; /* Set width as a percentage of the parent container */
     max-width: 600px; /* Limit the maximum width */
     height: auto; /* Maintain the aspect ratio */
 }
