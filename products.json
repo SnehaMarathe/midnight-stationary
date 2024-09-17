@@ -53,6 +53,12 @@
             "name": "Single Grip Binder File",
             "price": 30,
             "image": "images/single-grip-binderfile.jpg"
+        },
+        {
+            "id": 10,
+            "name": "Ghotiv Paper / Origami Paper",
+            "price": 280,
+            "image": "images/origami-paper.jpg"
         }
         
     ],
