@@ -1,6 +1,6 @@
 // Constants for delivery fee and proximity distance
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
-const PROXIMITY_DISTANCE_KM = 66;  // Proximity range of 6km
+const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
 
 // Cart Array initialization
 let cart = [];
@@ -231,7 +231,7 @@ function getLocation() {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
                         title: '🎉 GREAT NEWS! 🎉',
-                        text: 'YOU ARE IN OUR DELIVERY RANGE ORDER NOW 🚀 Deliveries Start from 8PM Onwards 🚀',
+                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards 🚀',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
