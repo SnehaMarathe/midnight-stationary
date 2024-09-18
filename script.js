@@ -179,7 +179,7 @@ function initiateRazorpayPayment() {
         return;
     }
 
-    const totalWithFee = cartTotal + 150; // Add convenience fee
+    const totalWithFee = cartTotal + DELIVERY_FEE; // Add convenience fee
 
     const options = {
         "key": "rzp_live_qFVcFW1dSmAW0M", // "rzp_test_2wFKfqydF2XePp", // Replace with your Razorpay API key
