@@ -1,3 +1,7 @@
+// Constants for delivery fee and proximity distance
+const DELIVERY_FEE = 150;  // Delivery fee of ₹150
+const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 10km
+
 // Cart Array initialization
 let cart = [];
 // Haversine Formula to calculate distance between two lat/long points in kilometers
@@ -20,7 +24,7 @@ function deg2rad(deg) {
 function checkProximity(lat, lon, targetLocations) {
     return targetLocations.some(({ lat: targetLat, lon: targetLon }) => {
         const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
-        return distance <= 10; // Check if distance is within 10km
+        return distance <= PROXIMITY_DISTANCE_KM; // Check if distance is within range
     });
 }
 
@@ -238,7 +242,7 @@ function getLocation() {
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
             } else {
-                alert('Oops! It looks like you're just outside our delivery area 🚧 /n We'll be expanding soon, so stay tuned!');
+                alert('Oops! It looks like you're just outside our delivery area 🚧 \n We'll be expanding soon, so stay tuned!');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
             }
