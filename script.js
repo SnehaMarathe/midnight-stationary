@@ -1,6 +1,6 @@
 // Constants for delivery fee and proximity distance
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
-const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
+const PROXIMITY_DISTANCE_KM = 66;  // Proximity range of 6km
 
 // Cart Array initialization
 let cart = [];
