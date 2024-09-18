@@ -225,7 +225,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
+                alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀');
                 locationInfo.innerHTML = `Location: In Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
