@@ -229,26 +229,12 @@ function getLocation() {
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
-                Swal.fire({
-                          title: '🎉 GREAT NEWS!',
-                          text: 'You are in our delivery range! Deliveries start from 8PM onwards.',
-                          icon: 'success',  // You can use 'success', 'info', 'warning', 'error'
-                          confirmButtonText: 'Awesome!',
-                          background: '#f0f9ff', // Light blue background for a more joyful feel
-                          color: '#333',  // Text color
-                          backdrop: `
-                            rgba(0, 123, 255, 0.4)
-                            url("https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif")
-                            left top
-                            no-repeat
-                          `, // Adds a playful animated GIF or image as the backdrop
-                          showClass: {
-                            popup: 'animate__animated animate__fadeInDown'
-                          },
-                          hideClass: {
-                            popup: 'animate__animated animate__fadeOutUp'
-                          }
-                        });
+                    Swal.fire({
+                        title: '🎉 GREAT NEWS! 🎉',
+                        text: 'YOU ARE IN OUR DELIVERY RANGE ORDER NOW 🚀 Deliveries Start from 8PM Onwards 🚀',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
 
                 locationInfo.innerHTML = `Location: In Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 // Ensure buttons are rendered before enabling them
@@ -262,7 +248,13 @@ function getLocation() {
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
             } else {
-                alert('Oops! It looks like you\'re just outside our delivery area 🚧 \n We\'ll be expanding soon, so stay tuned!');
+                /* alert('Oops! It looks like you\'re just outside our delivery area 🚧 \n We\'ll be expanding soon, so stay tuned!'); */
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'It looks like you\'re just outside our delivery area 🚧 We\'ll be expanding soon, so stay tuned!',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });                
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
             }
