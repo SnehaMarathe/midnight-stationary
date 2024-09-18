@@ -325,6 +325,10 @@ footer p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
 
 
 
