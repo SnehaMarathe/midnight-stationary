@@ -238,7 +238,7 @@ function getLocation() {
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
             } else {
-                alert('Sorry, you are outside our delivery range.');
+                alert('Oops! It looks like you're just outside our delivery area 🚧 /n We'll be expanding soon, so stay tuned!');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
             }
