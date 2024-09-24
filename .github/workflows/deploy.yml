@@ -1,0 +1,29 @@
+name: Upload Location Data
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload-location:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16' # or whatever version of Node.js you are using
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Upload Location to GitHub
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Pass the GitHub token from secrets
+      run: |
+        node -e "require('./script.js').uploadLocationToGithub(process.env.GITHUB_TOKEN)"
+
