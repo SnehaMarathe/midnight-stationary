@@ -227,8 +227,6 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(position => {
             currentLat = position.coords.latitude;
             currentLon = position.coords.longitude;
-            // Save user location to GitHub
-            saveLocationToGitHub(currentLat, currentLon);
             
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
@@ -250,6 +248,8 @@ function getLocation() {
                 
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
+                // Save user location to GitHub
+                saveLocationToGitHub(currentLat, currentLon);                
             } else {
                 /* alert('Oops! It looks like you\'re just outside our delivery area 🚧 \n We\'ll be expanding soon, so stay tuned!'); */
                     Swal.fire({
@@ -260,6 +260,8 @@ function getLocation() {
                     });                
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
+                // Save user location to GitHub
+                saveLocationToGitHub(currentLat, currentLon);                       
             }
         });
     } else {
