@@ -2,7 +2,6 @@
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
 const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
 const filePath = 'location_data.json'; // or 'data/location_data.json';
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // In Node.js or server-side code
 
 // Cart Array initialization
 let cart = [];
@@ -368,7 +367,7 @@ async function uploadLocationToGithub() {
     const options = {
         method: 'PUT',
         headers: {
-            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Authorization': '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',
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
         },
