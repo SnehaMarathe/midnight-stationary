@@ -1,6 +1,7 @@
 // Constants for delivery fee and proximity distance
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
 const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
+const filePath = 'location_data.json'; // or 'data/location_data.json';
 
 // Cart Array initialization
 let cart = [];
@@ -226,7 +227,9 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(position => {
             currentLat = position.coords.latitude;
             currentLon = position.coords.longitude;
-
+            // Save user location to GitHub
+            saveLocationToGitHub(currentLat, currentLon);
+            
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
@@ -332,5 +335,61 @@ function enableAddToCartButtons(enable) {
         });
     } else {
         console.error('Add to Cart buttons not found!');
+    }
+}
+
+// Newly added function to save location
+async function uploadLocationToGithub() {
+    const locationData = JSON.stringify({
+        latitude: currentLat,
+        longitude: currentLon,
+        timestamp: new Date().toISOString()
+    });
+
+    // Convert the JSON data to Base64
+    const encodedData = btoa(locationData);
+    
+    // Update the URL with your GitHub username and repository name
+    const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/contents/location_data.json';
+
+    let sha = null;
+    
+    // Check if the file already exists to get the sha (necessary for updates)
+    try {
+        const existingFileResponse = await fetch(url);
+        if (existingFileResponse.ok) {
+            const existingFile = await existingFileResponse.json();
+            sha = existingFile.sha; // Get the sha of the existing file
+        }
+    } catch (error) {
+        console.log("File does not exist yet, creating a new one.");
+    }
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': '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',  // Add your GitHub token here
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: "Add user location data",
+            content: encodedData,
+            sha: sha, // Include sha if updating an existing file, otherwise it's null for new files
+            committer: {
+                name: "Sneha Marathe",  // Add your GitHub name here
+                email: "your-email@example.com"  // Add your GitHub email here
+            }
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+            console.log("Location data uploaded successfully.");
+        } else {
+            console.error("Error uploading location data:", await response.json());
+        }
+    } catch (error) {
+        console.error("Error during GitHub API request:", error);
     }
 }
