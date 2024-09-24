@@ -231,7 +231,7 @@ function getLocation() {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
                         title: '🎉 GREAT NEWS! 🎉',
-                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards 🚀',
+                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards1 🚀',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -362,7 +362,7 @@ async function uploadLocationToGithub(currentLat,currentLon) {
     const options = {
         method: 'PUT',
         headers: {
-            'Authorization': 'Bearer YOUR_GITHUB_TOKEN', // Ensure to replace with your actual token
+            'Authorization': `token ${githubToken}`, // Pass the GitHub token as an argument
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
         },
