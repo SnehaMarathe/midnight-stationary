@@ -349,7 +349,7 @@ async function uploadLocationToGithub() {
     });
 
     const encodedData = btoa(locationData);
-    const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/contents/location_data.json';
+    const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/main/location_data.json';
 
     let sha = null;
 
