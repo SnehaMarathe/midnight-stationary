@@ -231,7 +231,7 @@ function getLocation() {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
                         title: '🎉 GREAT NEWS! 🎉',
-                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards 🚀',
+                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards1 🚀',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -336,7 +336,6 @@ function enableAddToCartButtons(enable) {
     }
 }
 
-/*
 async function uploadLocationToGithub(currentLat,currentLon) {
     const locationData = JSON.stringify({
         latitude: currentLat,
@@ -390,4 +389,3 @@ async function uploadLocationToGithub(currentLat,currentLon) {
         console.error("Error during GitHub API request:" currentLat, error);
     }
 }
-*/
