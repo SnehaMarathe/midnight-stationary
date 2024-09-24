@@ -1,7 +1,6 @@
 // Constants for delivery fee and proximity distance
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
 const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
-const filePath = 'location_data.json'; // or 'data/location_data.json';
 
 // Cart Array initialization
 let cart = [];
@@ -227,7 +226,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(position => {
             currentLat = position.coords.latitude;
             currentLon = position.coords.longitude;
-            
+
             if (checkProximity(currentLat, currentLon, targetLocations)) {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
@@ -248,8 +247,6 @@ function getLocation() {
                 
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
-                // Save user location to GitHub
-                uploadLocationToGithub(currentLat, currentLon);                
             } else {
                 /* alert('Oops! It looks like you\'re just outside our delivery area 🚧 \n We\'ll be expanding soon, so stay tuned!'); */
                     Swal.fire({
@@ -260,8 +257,6 @@ function getLocation() {
                     });                
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
-                // Save user location to GitHub
-                uploadLocationToGithub(currentLat, currentLon);                      
             }
         });
     } else {
@@ -339,7 +334,9 @@ function enableAddToCartButtons(enable) {
         console.error('Add to Cart buttons not found!');
     }
 }
-
+                                
+/*
+uploadLocationToGithub(currentLat, currentLon);      
 // New code
 async function uploadLocationToGithub() {
     const locationData = JSON.stringify({
