@@ -371,6 +371,7 @@ async function uploadLocationToGithub() {
         method: 'PUT',
         headers: {
             'Authorization': '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',  // Add your GitHub token here
+            'Accept': 'application/vnd.github.v3+json'
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
