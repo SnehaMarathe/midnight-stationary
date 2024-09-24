@@ -340,6 +340,62 @@ function enableAddToCartButtons(enable) {
     }
 }
 
+// New code
+async function uploadLocationToGithub() {
+    const locationData = JSON.stringify({
+        latitude: currentLat,
+        longitude: currentLon,
+        timestamp: new Date().toISOString()
+    });
+
+    const encodedData = btoa(locationData);
+    const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/contents/location_data.json';
+
+    let sha = null;
+
+    // Check if the file exists to get the sha for updates
+    try {
+        const existingFileResponse = await fetch(url);
+        if (existingFileResponse.ok) {
+            const existingFile = await existingFileResponse.json();
+            sha = existingFile.sha; // Get the sha of the existing file
+        }
+    } catch (error) {
+        console.log("File does not exist yet, creating a new one.");
+    }
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': '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', // Ensure to replace with your actual token
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: sha ? "Update user location data" : "Add user location data",
+            content: encodedData,
+            sha: sha || undefined,
+            committer: {
+                name: "SnehaMarathe",
+                email: "doit13580@gmail.com"
+            }
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+            console.log("Location data uploaded successfully.");
+        } else {
+            const errorData = await response.json();
+            console.error("Error uploading location data:", errorData);
+        }
+    } catch (error) {
+        console.error("Error during GitHub API request:", error);
+    }
+}
+
+/*
 // Newly added funcation
 async function uploadLocationToGithub() {
     const locationData = JSON.stringify({
@@ -397,3 +453,4 @@ async function uploadLocationToGithub() {
         console.error("Error during GitHub API request:", error);
     }
 }
+*/
