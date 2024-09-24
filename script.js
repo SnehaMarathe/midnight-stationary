@@ -257,7 +257,7 @@ function getLocation() {
                     });                
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false);
-                uploadLocationToGithub(currentLat,currentLon);
+                //uploadLocationToGithub(currentLat,currentLon);
             }
         });
     } else {
@@ -336,6 +336,7 @@ function enableAddToCartButtons(enable) {
     }
 }
 
+/*
 async function uploadLocationToGithub(currentLat,currentLon) {
     const locationData = JSON.stringify({
         latitude: currentLat,
@@ -389,3 +390,4 @@ async function uploadLocationToGithub(currentLat,currentLon) {
         console.error("Error during GitHub API request:" currentLat, error);
     }
 }
+*/
