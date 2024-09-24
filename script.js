@@ -370,7 +370,7 @@ async function uploadLocationToGithub() {
     const options = {
         method: 'PUT',
         headers: {
-            'Authorization': 'Bearer YOUR_GITHUB_TOKEN',  // Ensure to use 'Bearer' before your token
+            'Authorization': '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',  // Ensure to use 'Bearer' before your token
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'  // Corrected: comma added
         },
