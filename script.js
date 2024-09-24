@@ -340,7 +340,7 @@ function enableAddToCartButtons(enable) {
     }
 }
 
-// Newly added function to save location
+// Newly added funcation
 async function uploadLocationToGithub() {
     const locationData = JSON.stringify({
         latitude: currentLat,
@@ -351,11 +351,11 @@ async function uploadLocationToGithub() {
     // Convert the JSON data to Base64
     const encodedData = btoa(locationData);
     
-    // Update the URL with your GitHub username and repository name
+    // GitHub API URL for the contents endpoint
     const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/contents/location_data.json';
 
     let sha = null;
-    
+
     // Check if the file already exists to get the sha (necessary for updates)
     try {
         const existingFileResponse = await fetch(url);
@@ -370,17 +370,17 @@ async function uploadLocationToGithub() {
     const options = {
         method: 'PUT',
         headers: {
-            'Authorization': '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',  // Add your GitHub token here
-            'Accept': 'application/vnd.github.v3+json'
-            'Content-Type': 'application/json'
+            'Authorization': 'Bearer YOUR_GITHUB_TOKEN',  // Ensure to use 'Bearer' before your token
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'  // Corrected: comma added
         },
         body: JSON.stringify({
-            message: "Add user location data",
+            message: sha ? "Update user location data" : "Add user location data", // Different messages for update/create
             content: encodedData,
-            sha: sha, // Include sha if updating an existing file, otherwise it's null for new files
+            sha: sha || undefined, // Include sha if updating an existing file, otherwise it's undefined
             committer: {
-                name: "SnehaMarathe",  // Add your GitHub name here
-                email: "doit13580@gmail.com"  // Add your GitHub email here
+                name: "SnehaMarathe",  // Your GitHub name
+                email: "doit13580@gmail.com"  // Your GitHub email
             }
         })
     };
@@ -390,7 +390,8 @@ async function uploadLocationToGithub() {
         if (response.ok) {
             console.log("Location data uploaded successfully.");
         } else {
-            console.error("Error uploading location data:", await response.json());
+            const errorData = await response.json();
+            console.error("Error uploading location data:", errorData);
         }
     } catch (error) {
         console.error("Error during GitHub API request:", error);
