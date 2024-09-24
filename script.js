@@ -257,6 +257,7 @@ function getLocation() {
                     });                
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
+                uploadLocationToGithub(currentLat, currentLon);    
             }
         });
     } else {
@@ -334,11 +335,12 @@ function enableAddToCartButtons(enable) {
         console.error('Add to Cart buttons not found!');
     }
 }
-                                
-/*
-uploadLocationToGithub(currentLat, currentLon);      
+
+
+//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
+  
 // New code
-async function uploadLocationToGithub() {
+async function uploadLocationToGithub(currentLat, currentLon) {
     const locationData = JSON.stringify({
         latitude: currentLat,
         longitude: currentLon,
@@ -364,7 +366,7 @@ async function uploadLocationToGithub() {
     const options = {
         method: 'PUT',
         headers: {
-            'Authorization': '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',
+            'Authorization': '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',
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
         },
