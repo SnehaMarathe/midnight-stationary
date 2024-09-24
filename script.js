@@ -378,8 +378,8 @@ async function uploadLocationToGithub() {
             content: encodedData,
             sha: sha, // Include sha if updating an existing file, otherwise it's null for new files
             committer: {
-                name: "Sneha Marathe",  // Add your GitHub name here
-                email: "your-email@example.com"  // Add your GitHub email here
+                name: "SnehaMarathe",  // Add your GitHub name here
+                email: "doit13580@gmail.com"  // Add your GitHub email here
             }
         })
     };
