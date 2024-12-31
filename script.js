@@ -1,3 +1,4 @@
+// Code restored to 18th september
 // Constants for delivery fee and proximity distance
 const DELIVERY_FEE = 150;  // Delivery fee of ₹150
 const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
@@ -231,7 +232,7 @@ function getLocation() {
                 /* alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE : ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀'); */
                     Swal.fire({
                         title: '🎉 GREAT NEWS! 🎉',
-                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards1 🚀',
+                        html: 'YOU ARE IN OUR DELIVERY RANGE 📍<br> <br> 🛒 ORDER NOW 🛍️ 📦<br> <br>🚀 Deliveries Start from 8PM Onwards 🚀',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -332,60 +333,5 @@ function enableAddToCartButtons(enable) {
         });
     } else {
         console.error('Add to Cart buttons not found!');
-    }
-}
-
-// New Script Addtion
-async function uploadLocationToGithub(currentLat,currentLon) {
-    const locationData = JSON.stringify({
-        latitude: currentLat,
-        longitude: currentLon,
-        timestamp: new Date().toISOString()
-    });
-
-    const encodedData = btoa(locationData);
-    const url = 'https://api.github.com/repos/SnehaMarathe/midnight-stationary/contents/location_data.json';
-
-    let sha = null;
-
-    // Check if the file exists to get the sha for updates
-    try {
-        const existingFileResponse = await fetch(url);
-        if (existingFileResponse.ok) {
-            const existingFile = await existingFileResponse.json();
-            sha = existingFile.sha; // Get the sha of the existing file
-        }
-    } catch (error) {
-        console.log("File does not exist yet, creating a new one.");
-    }
-
-    const options = {
-        method: 'PUT',
-        headers: {
-            'Authorization': `token ${githubToken}`, // Pass the GitHub token as an argument
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message: sha ? "Update user location data" : "Add user location data",
-            content: encodedData,
-            sha: sha || undefined,
-            committer: {
-                name: "SnehaMarathe",
-                email: "doit13580@gmail.com"
-            }
-        })
-    };
-
-    try {
-        const response = await fetch(url, options);
-        if (response.ok) {
-            console.log("Location data uploaded successfully.");
-        } else {
-            const errorData = await response.json();
-            console.error("Error uploading location data:", errorData);
-        }
-    } catch (error) {
-        console.error("Error during GitHub API request:", error);
     }
 }
