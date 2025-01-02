@@ -1,10 +1,5 @@
-// Constants for delivery fee and proximity distance
-const DELIVERY_FEE = 150;  // Delivery fee of ₹150
-const PROXIMITY_DISTANCE_KM = 6;  // Proximity range of 6km
-
 // Cart Array initialization
 let cart = [];
-
 // Haversine Formula to calculate distance between two lat/long points in kilometers
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
@@ -25,7 +20,7 @@ function deg2rad(deg) {
 function checkProximity(lat, lon, targetLocations) {
     return targetLocations.some(({ lat: targetLat, lon: targetLon }) => {
         const distance = getDistanceFromLatLonInKm(lat, lon, targetLat, targetLon);
-        return distance <= PROXIMITY_DISTANCE_KM; // Check if distance is within range
+        return distance <= 10; // Check if distance is within 10km
     });
 }
 
@@ -150,7 +145,7 @@ function updateCart() {
 
     const cartTotal = cart.reduce((total, item) => total + item.price, 0);
     document.getElementById('cart-total').innerText = `Total: ₹${cartTotal}`;
-    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + DELIVERY_FEE}`;
+    document.getElementById('total-with-fee').innerText = `Total with Delivery: ₹${cartTotal + 150}`;
 }
 
 // Remove item from Cart
@@ -161,13 +156,14 @@ function removeFromCart(index) {
 
 // Function to initiate Razorpay UPI payment
 function initiateRazorpayPayment() {
+
     // Collect customer details
     var customerName = document.getElementById('customer-name').value;
     // var customerEmail = document.getElementById('customer-email').value;
     var customerContact = document.getElementById('customer-contact').value;
 
     // Validate form inputs
-    if (!customerName /*|| !customerEmail*/ || !customerContact) {
+    if (!customerName /*|| !customerEmail*/|| !customerContact) {
         alert('Please fill out all customer details.');
         return;
     }
@@ -179,16 +175,17 @@ function initiateRazorpayPayment() {
         return;
     }
 
-    const totalWithFee = cartTotal + DELIVERY_FEE; // Add convenience fee
+    const totalWithFee = cartTotal + 150; // Add convenience fee
 
     const options = {
-        "key": "rzp_live_qFVcFW1dSmAW0M", // Replace with your Razorpay API key
+        "key": "rzp_live_qFVcFW1dSmAW0M", // "rzp_test_2wFKfqydF2XePp", // Replace with your Razorpay API key
         "amount": totalWithFee * 100, // Razorpay accepts amount in paise (INR * 100)
         "currency": "INR",
         "name": "Latenight Stationery",
         "description": "Stationery Order Payment",
         "image": "https://your-logo-url.com/logo.png", // Optional logo
         "handler": function(response) {
+            
             // Handle the success callback
             alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
             
@@ -228,7 +225,7 @@ function getLocation() {
             currentLon = position.coords.longitude;
 
             if (checkProximity(currentLat, currentLon, targetLocations)) {
-                alert('🎉 GREAT NEWS! 🎉 \n YOU ARE IN OUR DELIVERY RANGE ORDER NOW \n 🚀 Deliveries Start from 8PM Onwards 🚀');
+                alert('GREAT YOU ARE IN OUR DELIVERY RANGE');
                 locationInfo.innerHTML = `Location: In Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 // Ensure buttons are rendered before enabling them
                 enableAddToCartButtons(true); 
@@ -241,7 +238,7 @@ function getLocation() {
                 qrCodeButton.addEventListener('click', () => generateQRCode(message));
                 */
             } else {
-                alert('Oops! It looks like you\'re just outside our delivery area 🚧 \n We\'ll be expanding soon, so stay tuned!');
+                alert('Sorry, you are outside our delivery range.');
                 locationInfo.innerHTML = `Location: Outside Delivery Range (Latitude: ${currentLat}, Longitude: ${currentLon})`;
                 enableAddToCartButtons(false); 
             }
@@ -275,6 +272,7 @@ function sendWhatsAppMessage(customerName, customerContact, transactionId) {
     window.open(whatsappURL, '_blank');
 }
 
+/*
 // Fetch the visitor counter value from the raw GitHub URL
 async function fetchVisitorCounter() {
     try {
@@ -293,7 +291,25 @@ async function fetchVisitorCounter() {
 
 // Call the function to update the visitor counter
 fetchVisitorCounter();
+*/
+// Fetch the visitor counter value from the raw GitHub URL
+async function fetchVisitorCounter() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/SnehaMarathe/midnight-stationary/main/counter.txt');
+        if (response.ok) {
+            const text = await response.text();
+            document.getElementById('visitor-counter').textContent = text.trim();
+        } else {
+            document.getElementById('visitor-counter').textContent = "Error fetching visitor count";
+        }
+    } catch (error) {
+        console.error('Error fetching visitor counter:', error);
+        document.getElementById('visitor-counter').textContent = "Error";
+    }
+}
 
+// Call the function to update the visitor counter
+fetchVisitorCounter();
 // QR Code Generation (Your implementation should be included here)
 function generateQRCode(message) {
     // Your QR code logic should go here
